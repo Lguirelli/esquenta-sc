@@ -7,12 +7,12 @@
 }
 
 :root {
-  --opella-width: 10vw;
+  --opella-width: 24vw;
   --opella-min-width: 180px;
   --opella-max-width: 720px;
   --opella-top: 3vh;
 
-  --grupofarma-width: 12vw;
+  --grupofarma-width: 10vw;
   --grupofarma-min-width: 90px;
   --grupofarma-max-width: 300px;
   --grupofarma-bottom: 3vh;
@@ -158,23 +158,31 @@ body {
   }
 
   .podium {
-    width: 94vw;
+    width: 99vw;
     bottom: 12vh;
-    gap: 8px;
+    gap: 0;
+    justify-content: space-evenly;
+    padding: 0 1vw;
+  }
+
+  .duo {
+    flex: 1;
+    min-width: 0;
   }
 
   .duo-image {
-    width: 22vw;
+    width: 24vw;
   }
 
   .duo-name {
     margin-top: 8px;
-    font-size: clamp(10px, 2.7vw, 14px);
+    font-size: clamp(9px, 2.5vw, 13px);
+    text-align: center;
   }
 
   .winner-glow::before {
-    width: 160%;
-    height: 115%;
+    width: 150%;
+    height: 110%;
   }
 }
 
@@ -190,16 +198,17 @@ body {
   }
 
   .podium {
-    width: 96vw;
-    bottom: 14vh;
-    gap: 4px;
+    width: 100vw;
+    bottom: 15vh;
+    gap: 0;
+    padding: 0 1vw;
   }
 
   .duo-image {
-    width: 23vw;
+    width: 24vw;
   }
 
   .duo-name {
-    font-size: clamp(9px, 2.5vw, 12px);
+    font-size: clamp(8px, 2.4vw, 11px);
   }
 }
