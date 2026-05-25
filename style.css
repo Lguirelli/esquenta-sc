@@ -20,6 +20,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
+
   background-image: url("assets/background-base.png");
   background-size: cover;
   background-position: center;
@@ -28,43 +29,66 @@ body {
 
 .podium {
   position: absolute;
-  inset: 0;
+
+  left: 50%;
+  bottom: 6vh;
+
+  transform: translateX(-50%);
+
+  width: min(78vw, 1280px);
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-end;
-  gap: clamp(12px, 2.4vw, 46px);
-  padding: 0 5vw 8vh;
+
+  gap: clamp(18px, 3vw, 60px);
 }
 
 .duo {
   position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+
   transform-origin: bottom center;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+
+  transition:
+    transform 0.6s ease,
+    opacity 0.6s ease;
 }
 
 .duo-image {
-  width: min(22vw, 390px);
+  width: min(18vw, 300px);
   height: auto;
+
   object-fit: contain;
+
   user-select: none;
   pointer-events: none;
+
   filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.38));
 }
 
 .duo-name {
   margin-top: 14px;
+
   padding: 8px 18px;
+
   border-radius: 999px;
+
   font-size: clamp(15px, 1.35vw, 24px);
   font-weight: 700;
+
   color: #ffffff;
+
   background: rgba(0, 0, 0, 0.34);
+
   backdrop-filter: blur(6px);
+
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+
   white-space: nowrap;
 }
 
@@ -85,13 +109,15 @@ body {
 }
 
 @media (max-width: 900px) {
+
   .podium {
+    width: 92vw;
     gap: 10px;
-    padding-bottom: 6vh;
+    bottom: 4vh;
   }
 
   .duo-image {
-    width: 24vw;
+    width: 21vw;
   }
 
   .duo-name {
