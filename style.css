@@ -6,7 +6,7 @@
 
 /* AJUSTES RÁPIDOS DOS LOGOS */
 :root {
-  --opella-width: min(22vw, 720px);
+  --opella-width: min(22vw, 1720px);
   --opella-top: 3vh;
 
   --grupofarma-width: min(16vw, 300px);
