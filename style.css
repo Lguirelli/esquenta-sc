@@ -9,10 +9,10 @@
 /* AJUSTES DOS LOGOS */
 
 :root {
-  --opella-width: min(40vw, 420px);
+  --opella-width: min(30vw, 420px);
   --opella-top: 3vh;
 
-  --grupofarma-width: min(8vw, 300px);
+  --grupofarma-width: min(16vw, 300px);
   --grupofarma-bottom: 3vh;
 }
 
