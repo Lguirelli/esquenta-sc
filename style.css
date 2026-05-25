@@ -273,9 +273,9 @@ body {
 
   :root {
 
-    --opella-width: clamp(130px, 58vw, 260px);
+    --opella-width: clamp(130px, 20vw, 260px);
 
-    --grupofarma-width: clamp(70px, 30vw, 130px);
+    --grupofarma-width: clamp(70px, 40vw, 130px);
 
     --ranking-width: 96vw;
     --ranking-bottom: 14vh;
