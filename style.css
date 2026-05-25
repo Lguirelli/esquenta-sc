@@ -147,6 +147,35 @@ body {
   white-space: nowrap;
 }
 
+/* GLOW DO PRIMEIRO LUGAR */
+
+.winner-glow::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 45%;
+
+  width: 145%;
+  height: 105%;
+
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 80, 0.45) 0%,
+    rgba(0, 255, 80, 0.25) 38%,
+    rgba(0, 255, 80, 0) 72%
+  );
+
+  filter: blur(24px);
+
+  z-index: -1;
+
+  pointer-events: none;
+}
+
 /* CAMADAS */
 
 .place-1 {
@@ -191,5 +220,10 @@ body {
 
   .duo-name {
     font-size: 13px;
+  }
+
+  .winner-glow::before {
+    width: 160%;
+    height: 115%;
   }
 }
