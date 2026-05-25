@@ -7,7 +7,7 @@
 }
 
 :root {
-  --opella-width: clamp(180px, 22vw, 620px);
+  --opella-width: clamp(180px, 12vw, 620px);
   --opella-top: clamp(14px, 3vh, 40px);
 
   --grupofarma-width: clamp(90px, 10vw, 260px);
