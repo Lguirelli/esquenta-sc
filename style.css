@@ -1,249 +1,65 @@
+:root {
+  --bg-green: #053E0F;
+  --accent-green: #19C738;
+  --dark-accent: #1F4A15;
+  --white: #FFFFFF;
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
+html,
 body {
-  overflow: hidden;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-green);
   font-family: Arial, Helvetica, sans-serif;
-  background: #042f0b;
 }
 
 .screen {
   position: relative;
   width: 100vw;
   height: 100vh;
+  min-width: 1280px;
+  min-height: 720px;
   overflow: hidden;
-  background: #042f0b;
+  background: var(--bg-green);
+  aspect-ratio: 16 / 9;
 }
 
-/* FUNDO */
-
-.bg-gradient {
+.opella {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(22, 108, 39, 0.95) 0%,
-      rgba(8, 55, 17, 1) 55%,
-      rgba(3, 26, 8, 1) 100%
-    );
-}
-
-.bg-light {
-  position: absolute;
-  width: 1200px;
-  height: 1200px;
-  border-radius: 50%;
-  background: rgba(49, 180, 77, 0.12);
-  filter: blur(120px);
-
-  top: 50%;
+  top: 4.6%;
   left: 50%;
-
-  transform: translate(-50%, -50%);
-}
-
-/* FORMAS PSD */
-
-.shape {
-  position: absolute;
-  background: rgba(255,255,255,0.04);
-  filter: blur(2px);
-}
-
-.shape-1 {
-  width: 900px;
-  height: 180px;
-
-  top: 120px;
-  left: -120px;
-
-  transform: rotate(-18deg);
-}
-
-.shape-2 {
-  width: 700px;
-  height: 140px;
-
-  bottom: 120px;
-  right: -180px;
-
-  transform: rotate(-18deg);
-}
-
-.shape-3 {
-  width: 500px;
-  height: 90px;
-
-  bottom: 260px;
-  left: -120px;
-
-  transform: rotate(-18deg);
-}
-
-/* LOGOS */
-
-.logo-opella {
-  position: absolute;
-  top: 42px;
-  left: 50%;
+  width: 16.25%;
+  max-width: 312px;
   transform: translateX(-50%);
-  width: 220px;
-  object-fit: contain;
 }
-
-.logo-grupofarma {
-  position: absolute;
-  bottom: 28px;
-  right: 40px;
-  width: 180px;
-  opacity: 0.9;
-}
-
-/* CONTAINER */
-
-.ranking-container {
-  position: absolute;
-
-  width: 82%;
-  max-width: 1600px;
-
-  left: 50%;
-  top: 54%;
-
-  transform: translate(-50%, -50%);
-}
-
-/* TÍTULO */
-
-.title {
-  text-align: center;
-  color: white;
-
-  font-size: 58px;
-  font-weight: 900;
-
-  margin-bottom: 48px;
-
-  text-transform: uppercase;
-  letter-spacing: 2px;
-
-  text-shadow:
-    0 4px 14px rgba(0,0,0,0.35);
-}
-
-/* GRID */
-
-.ranking-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 26px;
-}
-
-/* CARD */
-
-.ranking-card {
-  position: relative;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.96),
-      rgba(242,242,242,0.92)
-    );
-
-  border-radius: 28px;
-
-  min-height: 270px;
-
-  padding: 34px 24px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  box-shadow:
-    0 25px 40px rgba(0,0,0,0.30);
-
-  backdrop-filter: blur(10px);
-}
-
-/* PRIMEIRO */
-
-.first {
-  border: 4px solid #f7c948;
-  transform: translateY(-18px);
-}
-
-/* COROA */
 
 .crown {
   position: absolute;
+  top: 3.9%;
+  left: 4.9%;
+  width: 27.4%;
+  max-width: 526px;
+  opacity: 1;
+}
 
-  width: 95px;
+.ranking-area {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 20%;
+  bottom: 18%;
+}
 
-  top: -64px;
+.grupofarma {
+  position: absolute;
   left: 50%;
-
+  bottom: 6.4%;
+  width: 12.86%;
+  max-width: 247px;
   transform: translateX(-50%);
-}
-
-/* POSIÇÃO */
-
-.position {
-  font-size: 58px;
-  font-weight: 900;
-  color: #06380d;
-
-  margin-bottom: 16px;
-}
-
-/* TIME */
-
-.team {
-  font-size: 28px;
-  font-weight: 800;
-
-  text-align: center;
-  color: #06380d;
-
-  margin-bottom: 14px;
-}
-
-/* SCORE */
-
-.score {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1c7a34;
-}
-
-/* RESPONSIVO */
-
-@media (max-width: 1400px) {
-
-  .ranking-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .ranking-container {
-    top: 52%;
-  }
-
-}
-
-@media (max-width: 900px) {
-
-  .ranking-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .title {
-    font-size: 42px;
-  }
-
 }
