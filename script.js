@@ -26,20 +26,38 @@ const duoMap = {
   }
 };
 
-/* NORMALIZA NOMES */
-
 function normalizeName(text) {
   return text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/\s+/g, "")
+    .replace(/\be\b/g, "-")
     .replace(/[•/&]/g, "-")
     .replace(/--+/g, "-")
     .trim();
 }
 
-/* LEITURA DOS VALORES */
+function parseMoney(valueText) {
+  let value = valueText
+    .replace(/[R$\s]/g, "")
+    .trim();
+
+  if (value.includes(".") && value.includes(",")) {
+    value = value.replace(/\./g, "").replace(",", ".");
+  } else if (value.includes(",")) {
+    const parts = value.split(",");
+
+    if (parts.length > 2) {
+      const cents = parts.pop();
+      value = parts.join("") + "." + cents;
+    } else {
+      value = value.replace(",", ".");
+    }
+  }
+
+  return Number(value);
+}
 
 function readValues(text) {
   return text
@@ -48,18 +66,15 @@ function readValues(text) {
     .filter(Boolean)
 
     .map((line) => {
-
-      const valueMatch =
-        line.match(/(\d+(?:[,.]\d+)?)\s*$/);
+      const valueMatch = line.match(/R?\$?\s*[\d.,]+\s*$/i);
 
       if (!valueMatch) return null;
 
-      const value = Number(
-        valueMatch[1].replace(",", ".")
-      );
+      const value = parseMoney(valueMatch[0]);
 
       const name = line
         .replace(valueMatch[0], "")
+        .replace(/[-–—]+$/, "")
         .trim();
 
       const id = normalizeName(name);
@@ -72,38 +87,25 @@ function readValues(text) {
     })
 
     .filter(Boolean)
-
     .filter((item) => duoMap[item.id]);
 }
 
-/* RENDER */
-
 function renderPodium() {
-
   const data = readValues(rawInput);
 
   if (!data.length) return;
 
-  /* MAIOR VALOR */
-
   const highestValue =
     Math.max(...data.map((item) => item.value)) || 1;
 
-  /* EMPATE */
-
   const winners =
-    data.filter(
-      (item) => item.value === highestValue
-    );
+    data.filter((item) => item.value === highestValue);
 
   const hasTie =
     winners.length > 1;
 
   data.forEach((item) => {
-
-    const duo = document.querySelector(
-      `[data-duo="${item.id}"]`
-    );
+    const duo = document.querySelector(`[data-duo="${item.id}"]`);
 
     if (!duo) return;
 
@@ -112,8 +114,6 @@ function renderPodium() {
 
     const nameTag =
       duo.querySelector(".duo-name");
-
-    /* ESCALA */
 
     const rawScale =
       item.value / highestValue;
@@ -124,32 +124,19 @@ function renderPodium() {
     duo.style.transform =
       `scale(${visualScale})`;
 
-    /* REMOVE GLOW ANTIGO */
-
     duo.classList.remove("winner-glow");
 
-    /* PRIMEIRO LUGAR */
-
     if (item.value === highestValue) {
-
-      /* GLOW */
-
       duo.classList.add("winner-glow");
-
-      /* COROA SOMENTE SEM EMPATE */
 
       image.src =
         hasTie
           ? duoMap[item.id].normal
           : duoMap[item.id].crown;
-
     } else {
-
       image.src =
         duoMap[item.id].normal;
     }
-
-    /* TEXTO */
 
     image.alt =
       duoMap[item.id].label;
@@ -158,7 +145,5 @@ function renderPodium() {
       duoMap[item.id].label;
   });
 }
-
-/* INICIAR */
 
 renderPodium();
