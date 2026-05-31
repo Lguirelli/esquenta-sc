@@ -6,14 +6,18 @@
 
 :root {
   --app-min-width: 320px;
-  --app-min-height: 520px;
-  --opella-width: clamp(116px, 11vw, 210px);
-  --grupofarma-width: clamp(110px, 15vw, 230px);
-  --ranking-width: min(94vw, 1180px);
-  --ranking-bottom: clamp(178px, 24vh, 260px);
+  --app-min-height: 560px;
+  --opella-width: clamp(118px, 11vw, 210px);
+  --grupofarma-width: clamp(110px, 14vw, 220px);
+  --ranking-width: min(95vw, 1180px);
+  --podium-bottom: clamp(188px, 26vh, 284px);
+  --controls-bottom: clamp(50px, 6.5vh, 84px);
   --duo-width: clamp(150px, 18vw, 268px);
-  --duo-gap: clamp(10px, 1.6vw, 28px);
-  --name-size: clamp(13px, 1.18vw, 22px);
+  --duo-gap: clamp(10px, 1.5vw, 24px);
+  --name-size: clamp(13px, 1.1vw, 21px);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
 }
 
 html,
@@ -56,11 +60,11 @@ img {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background:
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.1), transparent 32%),
-    linear-gradient(180deg, rgba(0, 38, 12, 0.06), rgba(0, 38, 12, 0.18));
-  pointer-events: none;
-  z-index: 1;
+    linear-gradient(180deg, rgba(0, 42, 12, 0.03), rgba(0, 42, 12, 0.16));
 }
 
 .brand-header,
@@ -82,7 +86,7 @@ img {
 
 .brand-footer {
   bottom: 0;
-  padding: 10px 18px clamp(16px, 3vh, 30px);
+  padding: 10px 18px clamp(14px, 2.6vh, 28px);
 }
 
 .brand-logo {
@@ -110,7 +114,7 @@ img {
 .podium {
   position: absolute;
   left: 50%;
-  bottom: var(--ranking-bottom);
+  bottom: var(--podium-bottom);
   width: var(--ranking-width);
   display: flex;
   justify-content: center;
@@ -139,6 +143,7 @@ img {
   pointer-events: none;
   transform-origin: bottom center;
   transition: transform 0.55s ease, filter 0.55s ease;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.24));
 }
 
 .duo-name {
@@ -158,23 +163,14 @@ img {
   content: "";
   position: absolute;
   left: 50%;
-  top: 45%;
+  top: 44%;
   width: 145%;
-  height: 105%;
+  height: 108%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 80, 0.42) 0%,
-    rgba(0, 255, 80, 0.22) 38%,
-    rgba(0, 255, 80, 0) 72%
-  );
+  background: radial-gradient(circle, rgba(0, 255, 95, 0.36) 0%, rgba(0, 255, 95, 0.18) 34%, rgba(0, 255, 95, 0) 72%);
   filter: blur(24px);
   z-index: -1;
   pointer-events: none;
-}
-
-.winner-glow .duo-image {
-  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.26));
 }
 
 .place-1 { z-index: 4; }
@@ -182,112 +178,17 @@ img {
 .place-3 { z-index: 2; }
 .place-4 { z-index: 1; }
 
-@media (max-width: 900px) {
-  :root {
-    --opella-width: clamp(104px, 26vw, 160px);
-    --grupofarma-width: clamp(92px, 25vw, 150px);
-    --ranking-width: 96vw;
-    --ranking-bottom: 27vh;
-    --duo-width: min(40vw, 212px);
-    --duo-gap: 10px;
-    --name-size: clamp(10px, 2.4vw, 16px);
-  }
-
-  .podium {
-    flex-wrap: wrap;
-    row-gap: clamp(8px, 2.4vh, 18px);
-    padding: 0 2vw;
-  }
-
-  .winner-glow::before {
-    width: 155%;
-    height: 115%;
-  }
-}
-
-@media (max-width: 520px) {
-  :root {
-    --app-min-height: 560px;
-    --opella-width: clamp(96px, 31vw, 136px);
-    --grupofarma-width: clamp(78px, 38vw, 130px);
-    --ranking-bottom: 31vh;
-    --duo-width: 41vw;
-    --duo-gap: 8px;
-    --name-size: clamp(10px, 2.8vw, 14px);
-  }
-
-  .brand-header {
-    padding-top: 12px;
-  }
-
-  .podium {
-    row-gap: 12px;
-    column-gap: 8px;
-  }
-}
-
-@media (max-height: 620px) and (min-width: 700px) {
-  :root {
-    --opella-width: clamp(88px, 9vw, 150px);
-    --grupofarma-width: clamp(90px, 12vw, 170px);
-    --ranking-bottom: 150px;
-    --duo-width: clamp(116px, 15vw, 190px);
-    --name-size: clamp(11px, 1.15vw, 17px);
-  }
-
-  .brand-header {
-    padding-top: 10px;
-  }
-
-  .brand-footer {
-    padding-bottom: 12px;
-  }
-}
-
 .controls-panel {
   position: absolute;
   left: 50%;
-  bottom: clamp(64px, 8vh, 104px);
+  bottom: var(--controls-bottom);
   width: var(--ranking-width);
   transform: translateX(-50%);
   z-index: 25;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(8px, 1.4vh, 14px);
-}
-
-.total-card {
-  width: min(100%, 560px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(8px, 1.4vw, 16px);
-  padding: clamp(8px, 1.2vh, 12px) clamp(14px, 2vw, 22px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  color: #fff;
-  background: rgba(0, 50, 18, 0.52);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  text-align: center;
-}
-
-.total-label {
-  font-size: clamp(11px, 1.05vw, 16px);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.total-value {
-  font-size: clamp(15px, 1.65vw, 26px);
-  font-weight: 900;
-  line-height: 1;
-  color: #fff46a;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  white-space: nowrap;
+  gap: clamp(12px, 1.4vh, 16px);
 }
 
 .slider-grid {
@@ -299,28 +200,31 @@ img {
 }
 
 .duo-slider {
+  --fill-percent: 0%;
+  --accent-1: #fff08b;
+  --accent-2: #c6ff67;
+  --track-rest: rgba(255, 255, 255, 0.18);
   flex: 0 1 var(--duo-width);
   width: var(--duo-width);
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  padding: clamp(8px, 1.15vh, 12px) clamp(9px, 1vw, 14px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  gap: 10px;
+  padding: 11px 13px 12px;
   border-radius: 18px;
+  border: 1px solid var(--glass-border);
   color: #fff;
-  background: rgba(0, 47, 15, 0.56);
-  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .slider-topline {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   text-align: center;
 }
 
@@ -332,6 +236,7 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: rgba(255, 255, 255, 0.88);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.38);
 }
 
@@ -347,81 +252,169 @@ img {
 
 .duo-slider input[type="range"] {
   width: 100%;
-  height: 18px;
+  height: 24px;
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
+  border-radius: 999px;
   background: transparent;
 }
 
+.duo-slider input[type="range"]:focus {
+  outline: none;
+}
+
 .duo-slider input[type="range"]::-webkit-slider-runnable-track {
-  height: 7px;
+  height: 8px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255, 244, 106, 0.95), rgba(0, 255, 106, 0.74));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24), 0 4px 10px rgba(0, 0, 0, 0.24);
+  background: linear-gradient(90deg,
+    var(--accent-1) 0%,
+    var(--accent-2) var(--fill-percent),
+    var(--track-rest) var(--fill-percent),
+    var(--track-rest) 100%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 0 12px rgba(255, 255, 255, 0.06),
+    0 5px 12px rgba(0, 0, 0, 0.2);
 }
 
 .duo-slider input[type="range"]::-webkit-slider-thumb {
-  width: 18px;
-  height: 18px;
-  margin-top: -5.5px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  width: 16px;
+  height: 16px;
+  margin-top: -4px;
+  border: 0;
   border-radius: 50%;
   appearance: none;
   -webkit-appearance: none;
-  background: #fff46a;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.32);
+  background: radial-gradient(circle at 35% 35%, #fffde8 0%, #fff4a6 55%, #e3d051 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36), 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .duo-slider input[type="range"]::-moz-range-track {
-  height: 7px;
+  height: 8px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255, 244, 106, 0.95), rgba(0, 255, 106, 0.74));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24), 0 4px 10px rgba(0, 0, 0, 0.24);
+  background: var(--track-rest);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 0 12px rgba(255, 255, 255, 0.06),
+    0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+.duo-slider input[type="range"]::-moz-range-progress {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
 }
 
 .duo-slider input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  width: 16px;
+  height: 16px;
+  border: 0;
   border-radius: 50%;
-  background: #fff46a;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.32);
+  background: radial-gradient(circle at 35% 35%, #fffde8 0%, #fff4a6 55%, #e3d051 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36), 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .control-place-1 {
-  border-color: rgba(255, 244, 106, 0.54);
-  background: rgba(18, 80, 20, 0.66);
+  border-color: rgba(255, 244, 106, 0.38);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 244, 106, 0.16) inset;
+}
+
+.total-card {
+  width: min(100%, 520px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 1.4vw, 16px);
+  padding: clamp(8px, 1vh, 11px) clamp(14px, 2vw, 22px);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+}
+
+.total-label {
+  font-size: clamp(11px, 1vw, 15px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.total-value {
+  font-size: clamp(15px, 1.65vw, 26px);
+  font-weight: 900;
+  line-height: 1;
+  color: #fff46a;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
-  .controls-panel {
-    bottom: clamp(54px, 7.5vh, 82px);
+  :root {
+    --opella-width: clamp(104px, 26vw, 160px);
+    --grupofarma-width: clamp(92px, 25vw, 150px);
+    --ranking-width: 96vw;
+    --podium-bottom: 30vh;
+    --controls-bottom: clamp(46px, 6vh, 72px);
+    --duo-width: min(40vw, 212px);
+    --duo-gap: 10px;
+    --name-size: clamp(10px, 2.3vw, 16px);
+  }
+
+  .podium,
+  .slider-grid {
+    flex-wrap: wrap;
+  }
+
+  .podium {
+    row-gap: clamp(10px, 2.6vh, 20px);
+    padding: 0 2vw;
   }
 
   .slider-grid {
-    flex-wrap: wrap;
     row-gap: 8px;
     padding: 0 2vw;
   }
 
   .duo-slider {
-    padding: 8px 9px;
-    border-radius: 14px;
+    border-radius: 16px;
+    padding: 9px 10px 10px;
+  }
+
+  .winner-glow::before {
+    width: 155%;
+    height: 118%;
   }
 }
 
 @media (max-width: 520px) {
-  .controls-panel {
-    bottom: clamp(48px, 7vh, 66px);
-    gap: 7px;
+  :root {
+    --opella-width: clamp(96px, 31vw, 136px);
+    --grupofarma-width: clamp(78px, 38vw, 130px);
+    --podium-bottom: 35vh;
+    --controls-bottom: clamp(42px, 6vh, 58px);
+    --duo-width: 41vw;
+    --duo-gap: 8px;
+    --name-size: clamp(10px, 2.8vw, 14px);
   }
 
-  .total-card {
-    width: min(94vw, 360px);
-    flex-direction: column;
-    gap: 3px;
-    padding: 7px 12px;
+  .brand-header {
+    padding-top: 12px;
+  }
+
+  .podium {
+    row-gap: 12px;
+    column-gap: 8px;
+  }
+
+  .controls-panel {
+    gap: 8px;
   }
 
   .slider-grid {
@@ -430,8 +423,8 @@ img {
   }
 
   .duo-slider {
-    gap: 5px;
-    padding: 7px 8px;
+    gap: 6px;
+    padding: 8px 8px 9px;
   }
 
   .slider-name {
@@ -441,22 +434,40 @@ img {
   .slider-value {
     font-size: clamp(10px, 2.75vw, 13px);
   }
+
+  .total-card {
+    width: min(94vw, 360px);
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 12px;
+  }
 }
 
 @media (max-height: 620px) and (min-width: 700px) {
-  .controls-panel {
-    bottom: 48px;
-    gap: 7px;
+  :root {
+    --opella-width: clamp(88px, 9vw, 150px);
+    --grupofarma-width: clamp(90px, 12vw, 170px);
+    --podium-bottom: 154px;
+    --controls-bottom: 36px;
+    --duo-width: clamp(116px, 15vw, 190px);
+    --name-size: clamp(11px, 1.15vw, 17px);
   }
 
-  .total-card {
-    padding-top: 6px;
-    padding-bottom: 6px;
+  .brand-header {
+    padding-top: 10px;
+  }
+
+  .brand-footer {
+    padding-bottom: 12px;
+  }
+
+  .controls-panel {
+    gap: 8px;
   }
 
   .duo-slider {
-    gap: 5px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    gap: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 }

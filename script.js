@@ -7,19 +7,16 @@ const duoMap = {
     normal: './assets/duplas/marcelly-raquel.png',
     crown: './assets/duplas/marcelly-raquel-coroa.png'
   },
-
   'michele-debora': {
     label: 'Michele & Debora',
     normal: './assets/duplas/michele-debora.png',
     crown: './assets/duplas/michele-debora-coroa.png'
   },
-
   'yasmin-laylla': {
     label: 'Laylla & Yasmin',
     normal: './assets/duplas/yasmin-laylla.png',
     crown: './assets/duplas/yasmin-laylla-coroa.png'
   },
-
   'alicia-ana': {
     label: 'Ana & Alicia',
     normal: './assets/duplas/alicia-ana.png',
@@ -38,12 +35,19 @@ function formatMoney(value) {
   return moneyFormatter.format(Number(value) || 0);
 }
 
+function updateSliderFill(slider) {
+  const min = Number(slider.min || 0);
+  const max = Number(slider.max || 100);
+  const value = Number(slider.value || 0);
+  const percent = max > min ? ((value - min) / (max - min)) * 100 : 0;
+  slider.style.setProperty('--fill-percent', `${percent}%`);
+}
+
 function readSliderValues() {
   return sliders
     .map((slider) => {
       const id = slider.dataset.slider;
       const value = Number(slider.value) || 0;
-
       return { id, value };
     })
     .filter((item) => duoMap[item.id]);
@@ -70,13 +74,12 @@ function setPlaces(data) {
 
 function renderPodium() {
   const data = readSliderValues();
-
   if (!data.length) return;
 
-  const highestValue = Math.max(...data.map((item) => item.value), 1);
-  const winners = data.filter((item) => item.value === highestValue);
-  const hasTie = winners.length > 1;
   const total = data.reduce((sum, item) => sum + item.value, 0);
+  const highestValue = Math.max(...data.map((item) => item.value), 0);
+  const winners = highestValue > 0 ? data.filter((item) => item.value === highestValue) : [];
+  const hasTie = winners.length > 1;
 
   setPlaces(data);
 
@@ -87,21 +90,27 @@ function renderPodium() {
   data.forEach((item) => {
     const duo = document.querySelector(`[data-duo="${item.id}"]`);
     const valueTag = document.querySelector(`[data-value-for="${item.id}"]`);
+    const slider = document.querySelector(`[data-slider="${item.id}"]`);
 
     if (valueTag) {
       valueTag.textContent = formatMoney(item.value);
+    }
+
+    if (slider) {
+      updateSliderFill(slider);
     }
 
     if (!duo) return;
 
     const image = duo.querySelector('.duo-image');
     const nameTag = duo.querySelector('.duo-name');
-    const rawScale = item.value / highestValue;
-    const visualScale = 0.76 + rawScale * 0.42;
+
+    const share = total > 0 ? item.value / total : 0.25;
+    const visualScale = total > 0 ? 0.86 + share * 0.62 : 1;
 
     if (image) {
       image.style.transform = `scale(${visualScale})`;
-      image.src = item.value === highestValue && !hasTie ? duoMap[item.id].crown : duoMap[item.id].normal;
+      image.src = item.value > 0 && item.value === highestValue && !hasTie ? duoMap[item.id].crown : duoMap[item.id].normal;
       image.alt = duoMap[item.id].label;
     }
 
@@ -109,11 +118,13 @@ function renderPodium() {
       nameTag.textContent = duoMap[item.id].label;
     }
 
-    duo.classList.toggle('winner-glow', item.value === highestValue);
+    duo.classList.toggle('winner-glow', item.value > 0 && item.value === highestValue);
   });
 }
 
 sliders.forEach((slider) => {
+  slider.value = '0';
+  updateSliderFill(slider);
   slider.addEventListener('input', renderPodium);
   slider.addEventListener('change', renderPodium);
 });
