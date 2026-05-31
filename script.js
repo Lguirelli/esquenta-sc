@@ -35,21 +35,12 @@ function formatMoney(value) {
   return moneyFormatter.format(Number(value) || 0);
 }
 
-function updateSliderFill(slider) {
-  const min = Number(slider.min || 0);
-  const max = Number(slider.max || 100);
-  const value = Number(slider.value || 0);
-  const percent = max > min ? ((value - min) / (max - min)) * 100 : 0;
-  slider.style.setProperty('--fill-percent', `${percent}%`);
-}
-
 function readSliderValues() {
   return sliders
-    .map((slider) => {
-      const id = slider.dataset.slider;
-      const value = Number(slider.value) || 0;
-      return { id, value };
-    })
+    .map((slider) => ({
+      id: slider.dataset.slider,
+      value: Number(slider.value) || 0
+    }))
     .filter((item) => duoMap[item.id]);
 }
 
@@ -90,20 +81,15 @@ function renderPodium() {
   data.forEach((item) => {
     const duo = document.querySelector(`[data-duo="${item.id}"]`);
     const valueTag = document.querySelector(`[data-value-for="${item.id}"]`);
-    const slider = document.querySelector(`[data-slider="${item.id}"]`);
 
     if (valueTag) {
       valueTag.textContent = formatMoney(item.value);
     }
 
-    if (slider) {
-      updateSliderFill(slider);
-    }
-
     if (!duo) return;
 
     const image = duo.querySelector('.duo-image');
-
+    const nameTag = duo.querySelector('.duo-name');
     const share = total > 0 ? item.value / total : 0.25;
     const visualScale = total > 0 ? 0.86 + share * 0.62 : 1;
 
@@ -113,13 +99,16 @@ function renderPodium() {
       image.alt = duoMap[item.id].label;
     }
 
+    if (nameTag) {
+      nameTag.textContent = duoMap[item.id].label;
+    }
+
     duo.classList.toggle('winner-glow', item.value > 0 && item.value === highestValue);
   });
 }
 
 sliders.forEach((slider) => {
   slider.value = '0';
-  updateSliderFill(slider);
   slider.addEventListener('input', renderPodium);
   slider.addEventListener('change', renderPodium);
 });

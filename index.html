@@ -4,16 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#003f10" />
-
   <title>Dia D Eurofarma</title>
-
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
 </head>
-
 <body>
   <main class="app-shell background-screen" data-portfolio-app="dia-d-eurofarma">
     <header class="brand-header" aria-label="Cabeçalho Opella">
@@ -24,89 +20,61 @@
       <section class="podium" id="podium" aria-live="polite">
         <article class="duo" data-duo="marcelly-raquel">
           <img class="duo-image" src="./assets/duplas/marcelly-raquel.png" alt="Raquel e Marcelly" />
+          <span class="duo-name">Raquel &amp; Marcelly</span>
         </article>
 
         <article class="duo" data-duo="michele-debora">
           <img class="duo-image" src="./assets/duplas/michele-debora.png" alt="Michele e Debora" />
+          <span class="duo-name">Michele &amp; Debora</span>
         </article>
 
         <article class="duo" data-duo="yasmin-laylla">
           <img class="duo-image" src="./assets/duplas/yasmin-laylla.png" alt="Laylla e Yasmin" />
+          <span class="duo-name">Laylla &amp; Yasmin</span>
         </article>
 
         <article class="duo" data-duo="alicia-ana">
           <img class="duo-image" src="./assets/duplas/alicia-ana.png" alt="Ana e Alicia" />
+          <span class="duo-name">Ana &amp; Alicia</span>
         </article>
       </section>
 
       <section class="controls-panel" aria-label="Controle de valores de positivação">
         <div class="slider-grid" id="sliderGrid">
           <label class="duo-slider" data-control="marcelly-raquel">
-            <span class="slider-topline">
+            <span class="slider-info">
               <span class="slider-name">Raquel &amp; Marcelly</span>
               <strong class="slider-value" data-value-for="marcelly-raquel">R$ 0,00</strong>
             </span>
-            <input
-              type="range"
-              min="0"
-              max="200000"
-              step="100"
-              value="0"
-              data-slider="marcelly-raquel"
-              aria-label="Valor de positivação Raquel e Marcelly"
-            />
+            <input type="range" min="0" max="200000" step="100" value="0" data-slider="marcelly-raquel" aria-label="Valor de positivação Raquel e Marcelly" />
           </label>
 
           <label class="duo-slider" data-control="michele-debora">
-            <span class="slider-topline">
+            <span class="slider-info">
               <span class="slider-name">Michele &amp; Debora</span>
               <strong class="slider-value" data-value-for="michele-debora">R$ 0,00</strong>
             </span>
-            <input
-              type="range"
-              min="0"
-              max="200000"
-              step="100"
-              value="0"
-              data-slider="michele-debora"
-              aria-label="Valor de positivação Michele e Debora"
-            />
+            <input type="range" min="0" max="200000" step="100" value="0" data-slider="michele-debora" aria-label="Valor de positivação Michele e Debora" />
           </label>
 
           <label class="duo-slider" data-control="yasmin-laylla">
-            <span class="slider-topline">
+            <span class="slider-info">
               <span class="slider-name">Laylla &amp; Yasmin</span>
               <strong class="slider-value" data-value-for="yasmin-laylla">R$ 0,00</strong>
             </span>
-            <input
-              type="range"
-              min="0"
-              max="200000"
-              step="100"
-              value="0"
-              data-slider="yasmin-laylla"
-              aria-label="Valor de positivação Laylla e Yasmin"
-            />
+            <input type="range" min="0" max="200000" step="100" value="0" data-slider="yasmin-laylla" aria-label="Valor de positivação Laylla e Yasmin" />
           </label>
 
           <label class="duo-slider" data-control="alicia-ana">
-            <span class="slider-topline">
+            <span class="slider-info">
               <span class="slider-name">Ana &amp; Alicia</span>
               <strong class="slider-value" data-value-for="alicia-ana">R$ 0,00</strong>
             </span>
-            <input
-              type="range"
-              min="0"
-              max="200000"
-              step="100"
-              value="0"
-              data-slider="alicia-ana"
-              aria-label="Valor de positivação Ana e Alicia"
-            />
+            <input type="range" min="0" max="200000" step="100" value="0" data-slider="alicia-ana" aria-label="Valor de positivação Ana e Alicia" />
           </label>
         </div>
 
-        <div class="total-card">
+        <div class="total-card" aria-hidden="true">
           <span class="total-label">Valor total de positivações</span>
           <strong class="total-value" id="totalValue">R$ 0,00</strong>
         </div>
