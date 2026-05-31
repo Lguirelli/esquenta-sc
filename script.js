@@ -103,7 +103,6 @@ function renderPodium() {
     if (!duo) return;
 
     const image = duo.querySelector('.duo-image');
-    const nameTag = duo.querySelector('.duo-name');
 
     const share = total > 0 ? item.value / total : 0.25;
     const visualScale = total > 0 ? 0.86 + share * 0.62 : 1;
@@ -112,10 +111,6 @@ function renderPodium() {
       image.style.transform = `scale(${visualScale})`;
       image.src = item.value > 0 && item.value === highestValue && !hasTie ? duoMap[item.id].crown : duoMap[item.id].normal;
       image.alt = duoMap[item.id].label;
-    }
-
-    if (nameTag) {
-      nameTag.textContent = duoMap[item.id].label;
     }
 
     duo.classList.toggle('winner-glow', item.value > 0 && item.value === highestValue);
