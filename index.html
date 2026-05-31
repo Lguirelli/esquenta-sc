@@ -3,203 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#003f10" />
 
-  <title>Ranking de Positivação Eurofarma</title>
+  <title>Dia D Eurofarma</title>
 
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-    }
-
-    .screen {
-      min-height: 100vh;
-      position: relative;
-      box-sizing: border-box;
-
-      padding: 130px 48px 120px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* HEADER */
-
-    .opella-header {
-      position: fixed;
-
-      top: 0;
-      left: 0;
-
-      width: 100%;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 28px 0 18px;
-
-      z-index: 20;
-
-      pointer-events: none;
-    }
-
-    /* FOOTER */
-
-    .grupofarma-footer {
-      position: fixed;
-
-      bottom: 0;
-      left: 0;
-
-      width: 100%;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 18px 0 28px;
-
-      z-index: 20;
-
-      pointer-events: none;
-    }
-
-    /* ÁREA RANKING */
-
-    .ranking-area {
-      width: min(100%, 1180px);
-
-      min-height: 520px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      position: relative;
-
-      z-index: 5;
-    }
-
-    .ranking-area .podium {
-      width: 100%;
-    }
-
-    /* RESPONSIVO */
-
-    @media (max-width: 768px) {
-      .screen {
-        padding: 110px 20px 100px;
-      }
-
-      .ranking-area {
-        min-height: 420px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
-  <main class="screen background-screen">
-
-    <!-- HEADER -->
-
-    <header class="opella-header" aria-label="Cabeçalho Opella">
-      <img
-        class="opella"
-        src="assets/opella-logo.png"
-        alt="Opella"
-      />
+  <main class="app-shell background-screen" data-portfolio-app="dia-d-eurofarma">
+    <header class="brand-header" aria-label="Cabeçalho Opella">
+      <img class="brand-logo brand-logo-opella" src="./assets/opella-logo.png" alt="Opella" />
     </header>
 
-    <!-- RANKING -->
+    <section class="ranking-area" aria-label="Ranking de positivação">
+      <section class="podium" id="podium" aria-live="polite">
+        <article class="duo" data-duo="marcelly-raquel">
+          <img class="duo-image" src="./assets/duplas/marcelly-raquel.png" alt="Raquel e Marcelly" />
+          <span class="duo-name">Raquel &amp; Marcelly</span>
+        </article>
 
-    <section
-      class="ranking-area"
-      aria-label="Área dinâmica do ranking"
-    >
+        <article class="duo" data-duo="michele-debora">
+          <img class="duo-image" src="./assets/duplas/michele-debora.png" alt="Michele e Debora" />
+          <span class="duo-name">Michele &amp; Debora</span>
+        </article>
 
-      <section class="podium" id="podium">
+        <article class="duo" data-duo="yasmin-laylla">
+          <img class="duo-image" src="./assets/duplas/yasmin-laylla.png" alt="Laylla e Yasmin" />
+          <span class="duo-name">Laylla &amp; Yasmin</span>
+        </article>
 
-        <div class="duo" data-duo="marcelly-raquel">
-          <img
-            class="duo-image"
-            src="assets/duplas/marcelly-raquel.png"
-            alt="Marcelly e Raquel"
-          />
-
-          <span class="duo-name">
-            Raquel & Marcelly 
-          </span>
-        </div>
-
-        <div class="duo" data-duo="michele-debora">
-          <img
-            class="duo-image"
-            src="assets/duplas/michele-debora.png"
-            alt="Michele e Debora"
-          />
-
-          <span class="duo-name">
-            Michele & Debora
-          </span>
-        </div>
-
-        <div class="duo" data-duo="yasmin-laylla">
-          <img
-            class="duo-image"
-            src="assets/duplas/yasmin-laylla.png"
-            alt="Yasmin e Laylla"
-          />
-
-          <span class="duo-name">
-           Laylla & Yasmin
-          </span>
-        </div>
-
-        <div class="duo" data-duo="alicia-ana">
-          <img
-            class="duo-image"
-            src="assets/duplas/alicia-ana.png"
-            alt="Alicia e Ana"
-          />
-
-          <span class="duo-name">
-            Ana & Alicia 
-          </span>
-        </div>
-
+        <article class="duo" data-duo="alicia-ana">
+          <img class="duo-image" src="./assets/duplas/alicia-ana.png" alt="Ana e Alicia" />
+          <span class="duo-name">Ana &amp; Alicia</span>
+        </article>
       </section>
 
-      <!-- VALORES -->
+      <section class="controls-panel" aria-label="Controle de valores de positivação">
+        <div class="total-card">
+          <span class="total-label">Valor total de positivações</span>
+          <strong class="total-value" id="totalValue">R$ 0,00</strong>
+        </div>
 
-      <textarea id="inputValores" hidden>
-Marcelly-Raquel R$142.554,36
-Michele-Debora R$80.627,09
-Yasmin-Laylla R$5.877,73
-Alicia-Ana R$46.155,86
-      </textarea>
+        <div class="slider-grid" id="sliderGrid">
+          <label class="duo-slider" data-control="marcelly-raquel">
+            <span class="slider-topline">
+              <span class="slider-name">Raquel &amp; Marcelly</span>
+              <strong class="slider-value" data-value-for="marcelly-raquel">R$ 142.554,36</strong>
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="200000"
+              step="100"
+              value="142554.36"
+              data-slider="marcelly-raquel"
+              aria-label="Valor de positivação Raquel e Marcelly"
+            />
+          </label>
 
+          <label class="duo-slider" data-control="michele-debora">
+            <span class="slider-topline">
+              <span class="slider-name">Michele &amp; Debora</span>
+              <strong class="slider-value" data-value-for="michele-debora">R$ 80.627,09</strong>
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="200000"
+              step="100"
+              value="80627.09"
+              data-slider="michele-debora"
+              aria-label="Valor de positivação Michele e Debora"
+            />
+          </label>
+
+          <label class="duo-slider" data-control="yasmin-laylla">
+            <span class="slider-topline">
+              <span class="slider-name">Laylla &amp; Yasmin</span>
+              <strong class="slider-value" data-value-for="yasmin-laylla">R$ 5.877,73</strong>
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="200000"
+              step="100"
+              value="5877.73"
+              data-slider="yasmin-laylla"
+              aria-label="Valor de positivação Laylla e Yasmin"
+            />
+          </label>
+
+          <label class="duo-slider" data-control="alicia-ana">
+            <span class="slider-topline">
+              <span class="slider-name">Ana &amp; Alicia</span>
+              <strong class="slider-value" data-value-for="alicia-ana">R$ 46.155,86</strong>
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="200000"
+              step="100"
+              value="46155.86"
+              data-slider="alicia-ana"
+              aria-label="Valor de positivação Ana e Alicia"
+            />
+          </label>
+        </div>
+      </section>
     </section>
 
-    <!-- FOOTER -->
-
-    <footer
-      class="grupofarma-footer"
-      aria-label="Rodapé GrupoFarma"
-    >
-      <img
-        class="grupofarma"
-        src="assets/grupofarma-logo.png"
-        alt="GrupoFarma"
-      />
+    <footer class="brand-footer" aria-label="Rodapé GrupoFarma">
+      <img class="brand-logo brand-logo-grupofarma" src="./assets/grupofarma-logo.png" alt="GrupoFarma" />
     </footer>
-
   </main>
 
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>

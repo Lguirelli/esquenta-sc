@@ -1,0 +1,12 @@
+{
+  "id": "dia-d-eurofarma",
+  "title": "Dia D Eurofarma",
+  "type": "app",
+  "entry": "index.html",
+  "description": "Ranking visual de positivação adaptado para abrir como app dentro do portfolio.",
+  "window": {
+    "width": 980,
+    "height": 620,
+    "resizable": true
+  }
+}
