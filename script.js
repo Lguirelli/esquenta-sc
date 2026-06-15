@@ -7,36 +7,36 @@ const participantMap = {
     label: 'Michele',
     fileKey: 'michele',
     states: {
-      neutral: './assets/participantes/michele/neutra.svg',
-      crown: './assets/participantes/michele/coroa.svg',
-      sad: './assets/participantes/michele/triste.svg'
+      neutral: './assets/participantes/michele/neutra.png',
+      crown: './assets/participantes/michele/coroa.png',
+      sad: './assets/participantes/michele/triste.png'
     }
   },
   marcelly: {
     label: 'Marcelly',
     fileKey: 'marcelly',
     states: {
-      neutral: './assets/participantes/marcelly/neutra.svg',
-      crown: './assets/participantes/marcelly/coroa.svg',
-      sad: './assets/participantes/marcelly/triste.svg'
+      neutral: './assets/participantes/marcelly/neutra.png',
+      crown: './assets/participantes/marcelly/coroa.png',
+      sad: './assets/participantes/marcelly/triste.png'
     }
   },
   pamela: {
     label: 'Pamela',
     fileKey: 'pamela',
     states: {
-      neutral: './assets/participantes/pamela/neutra.svg',
-      crown: './assets/participantes/pamela/coroa.svg',
-      sad: './assets/participantes/pamela/triste.svg'
+      neutral: './assets/participantes/pamela/neutra.png',
+      crown: './assets/participantes/pamela/coroa.png',
+      sad: './assets/participantes/pamela/triste.png'
     }
   },
   yasmin: {
     label: 'Yasmin',
     fileKey: 'yasmin',
     states: {
-      neutral: './assets/participantes/yasmin/neutra.svg',
-      crown: './assets/participantes/yasmin/coroa.svg',
-      sad: './assets/participantes/yasmin/triste.svg'
+      neutral: './assets/participantes/yasmin/neutra.png',
+      crown: './assets/participantes/yasmin/coroa.png',
+      sad: './assets/participantes/yasmin/triste.png'
     }
   }
 };

@@ -67,9 +67,9 @@ A página tenta reler o `valores.txt` automaticamente a cada 5 segundos.
 Cada participante possui 3 arquivos:
 
 ```txt
-neutra.svg
-coroa.svg
-triste.svg
+neutra.png
+coroa.png
+triste.png
 ```
 
 Substitua pelos seus arquivos finais mantendo os mesmos nomes.
