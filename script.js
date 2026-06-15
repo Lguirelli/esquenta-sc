@@ -5,6 +5,7 @@ const SCALE_BOOST = 0.52;
 const participantMap = {
   michele: {
     label: 'Michele',
+    baseScale: 0.96,
     states: {
       neutral: './assets/participantes/michele/neutra.png',
       crown: './assets/participantes/michele/coroa.png',
@@ -13,6 +14,7 @@ const participantMap = {
   },
   marcelly: {
     label: 'Marcelly',
+    baseScale: 0.97,
     states: {
       neutral: './assets/participantes/marcelly/neutra.png',
       crown: './assets/participantes/marcelly/coroa.png',
@@ -21,6 +23,7 @@ const participantMap = {
   },
   pamela: {
     label: 'Pamela',
+    baseScale: 0.90,
     states: {
       neutral: './assets/participantes/pamela/neutra.png',
       crown: './assets/participantes/pamela/coroa.png',
@@ -29,6 +32,7 @@ const participantMap = {
   },
   yasmin: {
     label: 'Yasmin',
+    baseScale: 1.06,
     states: {
       neutral: './assets/participantes/yasmin/neutra.png',
       crown: './assets/participantes/yasmin/coroa.png',
@@ -121,6 +125,7 @@ function updateCard(card, config, state, scale) {
 
   card.dataset.state = state;
   card.style.setProperty('--rank-scale', String(scale || 1));
+  card.style.setProperty('--base-scale', String(config.baseScale || 1));
   card.classList.toggle('is-leader', state === 'crown');
   card.classList.toggle('is-last', state === 'sad');
 

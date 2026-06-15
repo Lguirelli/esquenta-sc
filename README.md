@@ -174,3 +174,9 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - para atualizar o ranking, edite apenas os números dos elementos `data-score-for`
 - a escala agora parte de um tamanho base igual para todas e cresce conforme a participação de cada pessoa no total de positivação
 - quando todas estiverem zeradas, as quatro permanecem com a mesma proporção visual
+
+## Limitação inicial de tamanho
+
+- foi adicionada uma normalização inicial por participante com `baseScale`
+- isso garante que as quatro comecem visualmente mais próximas da mesma escala
+- a escala dinâmica continua reagindo ao total de positivação, mas agora parte de uma base equalizada

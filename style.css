@@ -124,6 +124,7 @@ img {
 }
 
 .participant {
+  --base-scale: 1;
   --rank-scale: 1;
   position: relative;
   min-width: 0;
@@ -150,12 +151,12 @@ img {
   z-index: 1;
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 94%;
+  max-height: 94%;
   object-fit: contain;
   object-position: center bottom;
   transform-origin: center bottom;
-  transform: scale(calc(var(--rank-scale) * var(--screen-scale)));
+  transform: scale(calc(var(--base-scale) * var(--rank-scale) * var(--screen-scale)));
   transition: transform 0.55s ease;
   filter: none;
   mix-blend-mode: multiply;
