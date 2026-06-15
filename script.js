@@ -1,5 +1,4 @@
 const REFRESH_INTERVAL = 5000;
-const IMAGE_VERSION = `ranking-assets-v6-${Date.now()}`;
 const SCALE_MIN = 0.78;
 const SCALE_MAX = 1.14;
 
@@ -39,6 +38,7 @@ const participantMap = {
 };
 
 const participantOrder = Object.keys(participantMap);
+let refreshCounter = 0;
 
 function normalizeName(value) {
   return String(value || '')
@@ -104,64 +104,91 @@ function getScales(data) {
   });
 }
 
-function buildStateMap(data) {
-  const stateMap = Object.fromEntries(participantOrder.map((id) => [id, 'neutral']));
+function resolveStates(data) {
+  const states = Object.fromEntries(participantOrder.map((id) => [id, 'neutral']));
+
+  if (!data.length) {
+    return states;
+  }
+
   const values = data.map((item) => item.value);
-  const highestValue = Math.max(...values, 0);
-  const lowestValue = Math.min(...values, 0);
-  const hasAnyValue = values.some((value) => value > 0);
+  const hasAnyPositive = values.some((value) => value > 0);
+
+  if (!hasAnyPositive) {
+    return states;
+  }
+
+  const highestValue = Math.max(...values);
+  const lowestValue = Math.min(...values);
   const allSame = values.every((value) => value === values[0]);
 
-  if (!hasAnyValue) {
-    return stateMap;
+  const leaderIds = data
+    .filter((item) => item.value === highestValue)
+    .map((item) => item.id);
+
+  const lastIds = allSame
+    ? []
+    : data.filter((item) => item.value === lowestValue).map((item) => item.id);
+
+  if (leaderIds.length === 1) {
+    states[leaderIds[0]] = 'crown';
   }
 
-  const leaders = data.filter((item) => item.value === highestValue).map((item) => item.id);
-  const lastOnes = !allSame
-    ? data.filter((item) => item.value === lowestValue).map((item) => item.id)
-    : [];
-
-  if (leaders.length === 1) {
-    stateMap[leaders[0]] = 'crown';
-  }
-
-  lastOnes.forEach((id) => {
-    stateMap[id] = 'sad';
+  lastIds.forEach((id) => {
+    states[id] = 'sad';
   });
 
-  return stateMap;
+  return states;
 }
 
-function applyRanking(data) {
-  const enriched = getScales(data);
-  const stateMap = buildStateMap(enriched);
-  const refreshToken = `${IMAGE_VERSION}-${Date.now()}`;
+function updateCard(card, config, state, scale, refreshToken) {
+  const image = card.querySelector('.participant-image');
+  const name = card.querySelector('.participant-name');
 
-  enriched.forEach((item) => {
-    const card = document.querySelector(`[data-participant="${item.id}"]`);
+  card.dataset.state = state;
+  card.style.setProperty('--participant-scale', String(scale || 1));
+  card.classList.toggle('is-leader', state === 'crown');
+  card.classList.toggle('is-last', state === 'sad');
+  card.classList.remove('is-lead-tie');
+  card.classList.remove('is-last-tie');
+
+  if (image) {
+    const nextSrc = `${config.states[state]}?v=${encodeURIComponent(refreshToken)}`;
+    image.removeAttribute('src');
+    image.setAttribute('src', nextSrc);
+    image.setAttribute('alt', `${config.label} - ${state}`);
+    image.dataset.renderedState = state;
+  }
+
+  if (name) {
+    name.textContent = config.label;
+  }
+}
+
+function applyRanking(parsedData) {
+  refreshCounter += 1;
+  const scaledData = getScales(parsedData);
+  const states = resolveStates(parsedData);
+  const refreshToken = `rank-${refreshCounter}-${Date.now()}`;
+
+  participantOrder.forEach((id) => {
+    const card = document.querySelector(`[data-participant="${id}"]`);
     if (!card) return;
 
-    const image = card.querySelector('.participant-image');
-    const name = card.querySelector('.participant-name');
-    const config = participantMap[item.id];
-    const state = stateMap[item.id] || 'neutral';
+    const config = participantMap[id];
+    const item = scaledData.find((entry) => entry.id === id) || { id, value: 0, scale: 1 };
+    const state = states[id] || 'neutral';
 
-    card.dataset.state = state;
-    card.style.setProperty('--participant-scale', String(item.scale || 1));
-    card.classList.toggle('is-leader', state === 'crown');
-    card.classList.toggle('is-last', state === 'sad');
-    card.classList.remove('is-lead-tie', 'is-last-tie');
-
-    if (image) {
-      image.src = `${config.states[state]}?v=${refreshToken}`;
-      image.alt = `${config.label} - ${state}`;
-      image.dataset.state = state;
-    }
-
-    if (name) {
-      name.textContent = config.label;
-    }
+    updateCard(card, config, state, item.scale, refreshToken);
   });
+
+  console.table(
+    participantOrder.map((id) => ({
+      participante: participantMap[id].label,
+      valor: parsedData.find((entry) => entry.id === id)?.value || 0,
+      estado: states[id] || 'neutral'
+    }))
+  );
 }
 
 async function loadValues() {
@@ -172,8 +199,8 @@ async function loadValues() {
     }
 
     const text = await response.text();
-    const data = parseValuesTxt(text);
-    applyRanking(data);
+    const parsedData = parseValuesTxt(text);
+    applyRanking(parsedData);
   } catch (error) {
     console.error(error);
   }
