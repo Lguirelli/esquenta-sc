@@ -1,6 +1,6 @@
 const REFRESH_INTERVAL = 5000;
-const SCALE_MIN = 0.78;
-const SCALE_MAX = 1.14;
+const SCALE_BASE = 1;
+const SCALE_BOOST = 0.52;
 
 const participantMap = {
   michele: {
@@ -40,14 +40,6 @@ const participantMap = {
 const participantOrder = Object.keys(participantMap);
 let lastSnapshot = '';
 
-function normalizeName(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-}
-
 function parseNumber(value) {
   const raw = String(value || '')
     .replace(/R\$/gi, '')
@@ -60,42 +52,26 @@ function parseNumber(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function parseValuesTxt(text) {
-  const lines = String(text || '')
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .filter((line) => !line.startsWith('#'));
-
-  const valueMap = new Map();
-
-  lines.forEach((line) => {
-    const match = line.match(/^([^:=\-]+?)\s*[:=-]\s*(.+)$/);
-    if (!match) return;
-
-    const [, rawName, rawValue] = match;
-    valueMap.set(normalizeName(rawName), parseNumber(rawValue));
+function readEmbeddedScores() {
+  return participantOrder.map((id) => {
+    const node = document.querySelector(`[data-score-for="${id}"]`);
+    return {
+      id,
+      value: node ? parseNumber(node.textContent) : 0
+    };
   });
-
-  return participantOrder.map((id) => ({
-    id,
-    value: valueMap.get(normalizeName(participantMap[id].label)) || 0
-  }));
 }
 
 function getScales(data) {
-  const values = data.map((item) => item.value);
-  const maxValue = Math.max(...values, 0);
-  const minValue = Math.min(...values, 0);
-  const spread = maxValue - minValue;
+  const total = data.reduce((acc, item) => acc + Math.max(item.value, 0), 0);
 
   return data.map((item) => {
-    if (maxValue <= 0 || spread <= 0) {
+    if (total <= 0) {
       return { ...item, scale: 1 };
     }
 
-    const ratio = (item.value - minValue) / spread;
-    const scale = SCALE_MIN + ratio * (SCALE_MAX - SCALE_MIN);
+    const share = Math.max(item.value, 0) / total;
+    const scale = SCALE_BASE + share * SCALE_BOOST;
 
     return {
       ...item,
@@ -189,26 +165,17 @@ function applyRanking(parsedData) {
     participantOrder.map((id) => ({
       participante: participantMap[id].label,
       valor: parsedData.find((entry) => entry.id === id)?.value || 0,
+      escala: scaledData.find((entry) => entry.id === id)?.scale || 1,
       estado: states[id] || 'neutral'
     }))
   );
 }
 
-async function loadValues() {
-  try {
-    const response = await fetch(`./valores.txt?t=${Date.now()}`, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`Falha ao carregar valores.txt: ${response.status}`);
-    }
-
-    const text = await response.text();
-    const parsedData = parseValuesTxt(text);
-    applyRanking(parsedData);
-  } catch (error) {
-    console.error(error);
-  }
+function refreshRanking() {
+  const parsedData = readEmbeddedScores();
+  applyRanking(parsedData);
 }
 
-loadValues();
-setInterval(loadValues, REFRESH_INTERVAL);
-window.addEventListener('focus', loadValues);
+refreshRanking();
+setInterval(refreshRanking, REFRESH_INTERVAL);
+window.addEventListener('focus', refreshRanking);

@@ -166,3 +166,11 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - o desbalanceamento visual quando todas estavam zeradas acontecia porque as caricaturas estavam sendo dimensionadas pela largura do card
 - agora as caricaturas usam `max-height: 100%` dentro de um stage com altura padronizada
 - com isso, quando todas estão com escala 1, passam a aparentar o mesmo tamanho base
+
+## Valores embutidos no index
+
+- os valores do ranking agora ficam no próprio `index.html`, dentro do bloco oculto `#ranking-source`
+- esse bloco não aparece na página
+- para atualizar o ranking, edite apenas os números dos elementos `data-score-for`
+- a escala agora parte de um tamanho base igual para todas e cresce conforme a participação de cada pessoa no total de positivação
+- quando todas estiverem zeradas, as quatro permanecem com a mesma proporção visual
