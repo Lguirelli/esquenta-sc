@@ -1,4 +1,4 @@
-Michele: 150
-Marcelly: 110
-Pamela: 75
-Yasmin: 128
+Michele: 0
+Marcelly: 0
+Pamela: 0
+Yasmin: 0
