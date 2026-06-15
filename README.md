@@ -180,3 +180,10 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - foi adicionada uma normalização inicial por participante com `baseScale`
 - isso garante que as quatro comecem visualmente mais próximas da mesma escala
 - a escala dinâmica continua reagindo ao total de positivação, mas agora parte de uma base equalizada
+
+## Equalização visual forçada
+
+- foi aplicada uma equalização inicial mais forte por participante
+- isso compensa diferenças de corte e proporção dos PNGs
+- agora as quatro começam visualmente muito mais próximas do mesmo tamanho
+- depois disso, a escala dinâmica continua crescendo de acordo com a participação no total de positivação

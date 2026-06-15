@@ -2,10 +2,13 @@ const REFRESH_INTERVAL = 5000;
 const SCALE_BASE = 1;
 const SCALE_BOOST = 0.52;
 
+// Equalização visual forçada para o estado inicial: como cada PNG tem recortes e proporções diferentes,
+// cada participante recebe um baseScale compensatório para começar visualmente no mesmo tamanho.
+
 const participantMap = {
   michele: {
     label: 'Michele',
-    baseScale: 0.96,
+    baseScale: 0.87,
     states: {
       neutral: './assets/participantes/michele/neutra.png',
       crown: './assets/participantes/michele/coroa.png',
@@ -14,7 +17,7 @@ const participantMap = {
   },
   marcelly: {
     label: 'Marcelly',
-    baseScale: 0.97,
+    baseScale: 1.00,
     states: {
       neutral: './assets/participantes/marcelly/neutra.png',
       crown: './assets/participantes/marcelly/coroa.png',
@@ -32,7 +35,7 @@ const participantMap = {
   },
   yasmin: {
     label: 'Yasmin',
-    baseScale: 1.06,
+    baseScale: 1.18,
     states: {
       neutral: './assets/participantes/yasmin/neutra.png',
       crown: './assets/participantes/yasmin/coroa.png',
