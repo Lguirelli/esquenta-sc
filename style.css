@@ -7,14 +7,15 @@
 :root {
   --app-min-width: 320px;
   --app-min-height: 560px;
-  --opella-width: clamp(240px, 24vw, 480px);
-  --grupofarma-width: clamp(70px, 9vw, 150px);
-  --lane-width: clamp(170px, 19vw, 280px);
-  --lane-gap: clamp(16px, 2vw, 30px);
-  --stage-height: clamp(240px, 40vh, 440px);
-  --name-font-size: clamp(22px, 2.1vw, 32px);
+  --opella-width: clamp(180px, 18vw, 480px);
+  --grupofarma-width: clamp(58px, 7vw, 150px);
+  --lane-width: clamp(116px, 15vw, 280px);
+  --lane-gap: clamp(10px, 1.6vw, 30px);
+  --stage-height: clamp(190px, 35vh, 440px);
+  --name-font-size: clamp(17px, 1.7vw, 32px);
   --bg-offwhite: #f4f0e6;
   --text-dark: #223126;
+  --screen-scale: 1;
 }
 
 html,
@@ -110,31 +111,33 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(90px, 14vh, 140px) clamp(16px, 4vw, 48px) clamp(80px, 12vh, 130px);
+  padding: clamp(74px, 13vh, 140px) clamp(12px, 3vw, 48px) clamp(64px, 10vh, 130px);
 }
 
 .podium {
-  width: min(1240px, 100%);
+  width: min(1120px, 100%);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--lane-gap);
   align-items: end;
+  justify-items: center;
 }
 
 .participant {
-  --participant-scale: 1;
+  --rank-scale: 1;
   position: relative;
   min-width: 0;
+  width: min(100%, var(--lane-width));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
-  gap: 8px;
+  gap: clamp(5px, 0.8vw, 8px);
 }
 
 .participant-stage {
   position: relative;
-  width: min(100%, var(--lane-width));
+  width: 100%;
   height: var(--stage-height);
   display: flex;
   align-items: end;
@@ -148,7 +151,7 @@ img {
   height: auto;
   object-fit: contain;
   transform-origin: center bottom;
-  transform: scale(var(--participant-scale));
+  transform: scale(calc(var(--rank-scale) * var(--screen-scale)));
   transition: transform 0.55s ease;
   filter: none;
   mix-blend-mode: multiply;
@@ -170,30 +173,101 @@ img {
   text-shadow: none;
 }
 
-@media (max-width: 980px) {
+
+
+  .podium {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lane-gap);
+  align-items: end;
+  justify-items: center;
+}
+}
+
+
+
+  .ranking-area {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(74px, 13vh, 140px) clamp(12px, 3vw, 48px) clamp(64px, 10vh, 130px);
+}
+
+  .podium {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lane-gap);
+  align-items: end;
+  justify-items: center;
+}
+}
+
+
+@media (max-width: 1180px) {
   :root {
-    --stage-height: clamp(210px, 34vh, 360px);
-    --lane-width: min(100%, 240px);
+    --screen-scale: 0.92;
+    --lane-width: clamp(112px, 14vw, 230px);
+    --stage-height: clamp(180px, 32vh, 360px);
+    --name-font-size: clamp(16px, 1.6vw, 26px);
+  }
+
+  .podium {
+    width: min(980px, 100%);
+  }
+}
+
+@media (max-width: 920px) {
+  :root {
+    --screen-scale: 0.84;
+    --lane-width: clamp(106px, 21vw, 220px);
+    --stage-height: clamp(170px, 30vh, 330px);
+    --name-font-size: clamp(16px, 2.4vw, 24px);
   }
 
   .podium {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 22px;
+    width: min(620px, 100%);
+    row-gap: clamp(10px, 3vh, 22px);
+    column-gap: clamp(10px, 4vw, 28px);
+  }
+
+  .ranking-area {
+    padding-top: clamp(82px, 12vh, 120px);
+    padding-bottom: clamp(70px, 10vh, 110px);
   }
 }
 
 @media (max-width: 560px) {
   :root {
-    --name-font-size: clamp(18px, 4.8vw, 24px);
-    --stage-height: clamp(190px, 28vh, 280px);
-  }
-
-  .ranking-area {
-    padding-top: clamp(84px, 12vh, 110px);
-    padding-bottom: clamp(80px, 10vh, 100px);
+    --screen-scale: 0.74;
+    --lane-width: clamp(94px, 38vw, 180px);
+    --stage-height: clamp(138px, 24vh, 240px);
+    --name-font-size: clamp(15px, 4.8vw, 22px);
+    --opella-width: clamp(150px, 42vw, 240px);
+    --grupofarma-width: clamp(52px, 17vw, 90px);
   }
 
   .podium {
-    gap: 16px 14px;
+    width: min(380px, 100%);
+    gap: clamp(8px, 2.5vw, 14px);
+  }
+
+  .ranking-area {
+    padding-top: clamp(72px, 11vh, 96px);
+    padding-bottom: clamp(62px, 9vh, 90px);
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --screen-scale: 0.68;
+    --lane-width: clamp(84px, 40vw, 150px);
+    --stage-height: clamp(120px, 22vh, 210px);
   }
 }

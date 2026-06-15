@@ -144,7 +144,7 @@ function updateCard(card, config, state, scale) {
   const name = card.querySelector('.participant-name');
 
   card.dataset.state = state;
-  card.style.setProperty('--participant-scale', String(scale || 1));
+  card.style.setProperty('--rank-scale', String(scale || 1));
   card.classList.toggle('is-leader', state === 'crown');
   card.classList.toggle('is-last', state === 'sad');
 

@@ -148,3 +148,15 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 
 - removida a sobreposição/filtro de cor do logo da Opella
 - caricaturas configuradas com `mix-blend-mode: multiply` no CSS
+
+## Ajuste do logo
+
+- adicionado drop shadow no logo da Opella para melhorar a separação do fundo
+
+## Ajuste responsivo de escala
+
+- a escala do ranking agora usa `--rank-scale` no JS
+- o CSS adiciona `--screen-scale` para reduzir proporcionalmente em telas menores
+- as imagens diminuem antes de quebrar o grid
+- abaixo de 920px o layout quebra para 2 colunas
+- abaixo de 560px o tamanho das imagens, logos e nomes é reduzido novamente
