@@ -67,9 +67,9 @@ A página tenta reler o `valores.txt` automaticamente a cada 5 segundos.
 Cada participante possui 3 arquivos:
 
 ```txt
-neutra.svg
-coroa.svg
-triste.svg
+neutra.png
+coroa.png
+triste.png
 ```
 
 Substitua pelos seus arquivos finais mantendo os mesmos nomes.
@@ -89,3 +89,17 @@ Depois abra:
 ```txt
 http://localhost:8000
 ```
+
+
+## Fundo
+
+O fundo agora é gerado por CSS no `style.css`.
+
+Não é necessário usar `background-base.png` ou `background-full.png`.
+
+
+## Ajustes recentes
+
+- pasta antiga `assets/duplas` removida
+- logos atualizadas em `assets/opella-logo.png` e `assets/grupofarma-logo.png`
+- a participante em último lugar agora usa a versão `triste.png` sempre que houver menor valor, mesmo em empate no último lugar

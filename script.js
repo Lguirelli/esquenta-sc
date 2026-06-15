@@ -7,36 +7,36 @@ const participantMap = {
     label: 'Michele',
     fileKey: 'michele',
     states: {
-      neutral: './assets/participantes/michele/neutra.svg',
-      crown: './assets/participantes/michele/coroa.svg',
-      sad: './assets/participantes/michele/triste.svg'
+      neutral: './assets/participantes/michele/neutra.png',
+      crown: './assets/participantes/michele/coroa.png',
+      sad: './assets/participantes/michele/triste.png'
     }
   },
   marcelly: {
     label: 'Marcelly',
     fileKey: 'marcelly',
     states: {
-      neutral: './assets/participantes/marcelly/neutra.svg',
-      crown: './assets/participantes/marcelly/coroa.svg',
-      sad: './assets/participantes/marcelly/triste.svg'
+      neutral: './assets/participantes/marcelly/neutra.png',
+      crown: './assets/participantes/marcelly/coroa.png',
+      sad: './assets/participantes/marcelly/triste.png'
     }
   },
   pamela: {
     label: 'Pamela',
     fileKey: 'pamela',
     states: {
-      neutral: './assets/participantes/pamela/neutra.svg',
-      crown: './assets/participantes/pamela/coroa.svg',
-      sad: './assets/participantes/pamela/triste.svg'
+      neutral: './assets/participantes/pamela/neutra.png',
+      crown: './assets/participantes/pamela/coroa.png',
+      sad: './assets/participantes/pamela/triste.png'
     }
   },
   yasmin: {
     label: 'Yasmin',
     fileKey: 'yasmin',
     states: {
-      neutral: './assets/participantes/yasmin/neutra.svg',
-      crown: './assets/participantes/yasmin/coroa.svg',
-      sad: './assets/participantes/yasmin/triste.svg'
+      neutral: './assets/participantes/yasmin/neutra.png',
+      crown: './assets/participantes/yasmin/coroa.png',
+      sad: './assets/participantes/yasmin/triste.png'
     }
   }
 };
@@ -120,10 +120,9 @@ function applyRanking(data) {
   const leaders = highestValue > 0
     ? enriched.filter((item) => item.value === highestValue)
     : [];
-  const lastOnes = enriched.filter((item) => item.value === lowestValue);
 
   const hasLeadTie = leaders.length > 1;
-  const hasLastTie = lastOnes.length > 1;
+  const allSame = highestValue === lowestValue;
 
   enriched.forEach((item) => {
     const card = document.querySelector(`[data-participant="${item.id}"]`);
@@ -134,21 +133,21 @@ function applyRanking(data) {
     const config = participantMap[item.id];
 
     const isLeader = highestValue > 0 && item.value === highestValue;
-    const isLast = item.value === lowestValue;
+    const isLast = !allSame && item.value === lowestValue;
 
     let state = 'neutral';
 
     if (isLeader && !hasLeadTie) {
       state = 'crown';
-    } else if (isLast && !hasLastTie && enriched.length > 1) {
+    } else if (isLast) {
       state = 'sad';
     }
 
     card.style.setProperty('--participant-scale', String(item.scale || 1));
-    card.classList.toggle('is-leader', isLeader);
-    card.classList.toggle('is-last', isLast && !hasLastTie);
+    card.classList.toggle('is-leader', isLeader && !hasLeadTie);
+    card.classList.toggle('is-last', isLast);
     card.classList.toggle('is-lead-tie', isLeader && hasLeadTie);
-    card.classList.toggle('is-last-tie', isLast && hasLastTie);
+    card.classList.toggle('is-last-tie', false);
 
     if (image) {
       image.src = config.states[state];
