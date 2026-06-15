@@ -1,5 +1,5 @@
 const REFRESH_INTERVAL = 5000;
-const IMAGE_VERSION = 'ranking-assets-v3';
+const IMAGE_VERSION = 'ranking-assets-v4';
 const SCALE_MIN = 0.78;
 const SCALE_MAX = 1.14;
 
@@ -121,11 +121,15 @@ function applyRanking(data) {
   const hasAnyValue = highestValue > 0;
   const allSame = highestValue === lowestValue;
 
-  const leaders = hasAnyValue
-    ? enriched.filter((item) => item.value === highestValue)
-    : [];
+  const leaderIds = hasAnyValue ? enriched
+    .filter((item) => item.value === highestValue)
+    .map((item) => item.id) : [];
 
-  const hasLeadTie = leaders.length > 1;
+  const lastIds = hasAnyValue && !allSame ? enriched
+    .filter((item) => item.value === lowestValue)
+    .map((item) => item.id) : [];
+
+  const hasLeadTie = leaderIds.length > 1;
 
   enriched.forEach((item) => {
     const card = document.querySelector(`[data-participant="${item.id}"]`);
@@ -133,10 +137,11 @@ function applyRanking(data) {
 
     const image = card.querySelector('.participant-image');
     const name = card.querySelector('.participant-name');
+    const sticker = card.querySelector('.participant-sticker');
     const config = participantMap[item.id];
 
-    const isLeader = hasAnyValue && item.value === highestValue;
-    const isLast = hasAnyValue && !allSame && item.value === lowestValue;
+    const isLeader = leaderIds.includes(item.id);
+    const isLast = lastIds.includes(item.id);
 
     let state = 'neutral';
 
@@ -154,16 +159,16 @@ function applyRanking(data) {
     card.classList.toggle('is-last-tie', false);
 
     if (image) {
-      const baseSrc = config.states[state];
-      const nextSrc = `${baseSrc}?v=${IMAGE_VERSION}`;
+      const nextSrc = `${config.states[state]}?v=${IMAGE_VERSION}&state=${state}`;
 
-      if (image.dataset.currentState !== state || image.dataset.currentBaseSrc !== baseSrc) {
-        image.src = nextSrc;
-        image.dataset.currentState = state;
-        image.dataset.currentBaseSrc = baseSrc;
-      }
-
+      image.removeAttribute('src');
+      image.src = nextSrc;
       image.alt = `${config.label} - ${state}`;
+      image.dataset.currentState = state;
+    }
+
+    if (sticker) {
+      sticker.setAttribute('data-state', state);
     }
 
     if (name) {

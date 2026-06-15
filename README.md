@@ -123,3 +123,11 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - logo GrupoFarma reduzida pela metade
 - lógica do último lugar reforçada para usar `triste.png`
 - adicionado cache buster nas imagens para evitar que o navegador mantenha a versão neutra antiga
+
+
+## Ajuste adicional
+
+- adicionado contorno branco de 5px nas imagens com visual de recorte
+- bordas do recorte deixadas mais retas por meio de um sticker branco com radius reduzido
+- reforçada a lógica da última colocada para sempre trocar para `triste.png`
+- atualização da imagem agora é forçada a cada recálculo do ranking
