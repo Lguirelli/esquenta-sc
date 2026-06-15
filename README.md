@@ -125,9 +125,11 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - adicionado cache buster nas imagens para evitar que o navegador mantenha a versão neutra antiga
 
 
-## Ajuste adicional
+## Ajustes aplicados
 
-- adicionado contorno branco de 5px nas imagens com visual de recorte
-- bordas do recorte deixadas mais retas por meio de um sticker branco com radius reduzido
-- reforçada a lógica da última colocada para sempre trocar para `triste.png`
-- atualização da imagem agora é forçada a cada recálculo do ranking
+- removidos glow e drop shadow das imagens
+- removidos boxes dos nomes e das imagens
+- imagens das participantes reconstruídas como recortes com borda branca de 5px e textura de papel aplicada em multiply a 50%
+- textura de papel aplicada também sobre o fundo verde
+- lógica do estado triste reescrita para forçar o uso de `triste.png` para toda participante com menor valor
+- limpeza de arquivos antigos não utilizados

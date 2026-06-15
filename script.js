@@ -1,12 +1,11 @@
 const REFRESH_INTERVAL = 5000;
-const IMAGE_VERSION = 'ranking-assets-v4';
+const IMAGE_VERSION = `ranking-assets-v6-${Date.now()}`;
 const SCALE_MIN = 0.78;
 const SCALE_MAX = 1.14;
 
 const participantMap = {
   michele: {
     label: 'Michele',
-    fileKey: 'michele',
     states: {
       neutral: './assets/participantes/michele/neutra.png',
       crown: './assets/participantes/michele/coroa.png',
@@ -15,7 +14,6 @@ const participantMap = {
   },
   marcelly: {
     label: 'Marcelly',
-    fileKey: 'marcelly',
     states: {
       neutral: './assets/participantes/marcelly/neutra.png',
       crown: './assets/participantes/marcelly/coroa.png',
@@ -24,7 +22,6 @@ const participantMap = {
   },
   pamela: {
     label: 'Pamela',
-    fileKey: 'pamela',
     states: {
       neutral: './assets/participantes/pamela/neutra.png',
       crown: './assets/participantes/pamela/coroa.png',
@@ -33,7 +30,6 @@ const participantMap = {
   },
   yasmin: {
     label: 'Yasmin',
-    fileKey: 'yasmin',
     states: {
       neutral: './assets/participantes/yasmin/neutra.png',
       crown: './assets/participantes/yasmin/coroa.png',
@@ -94,11 +90,7 @@ function getScales(data) {
   const spread = maxValue - minValue;
 
   return data.map((item) => {
-    if (maxValue <= 0) {
-      return { ...item, scale: 1 };
-    }
-
-    if (spread <= 0) {
+    if (maxValue <= 0 || spread <= 0) {
       return { ...item, scale: 1 };
     }
 
@@ -112,24 +104,38 @@ function getScales(data) {
   });
 }
 
-function applyRanking(data) {
-  const enriched = getScales(data);
-  const values = enriched.map((item) => item.value);
+function buildStateMap(data) {
+  const stateMap = Object.fromEntries(participantOrder.map((id) => [id, 'neutral']));
+  const values = data.map((item) => item.value);
   const highestValue = Math.max(...values, 0);
   const lowestValue = Math.min(...values, 0);
+  const hasAnyValue = values.some((value) => value > 0);
+  const allSame = values.every((value) => value === values[0]);
 
-  const hasAnyValue = highestValue > 0;
-  const allSame = highestValue === lowestValue;
+  if (!hasAnyValue) {
+    return stateMap;
+  }
 
-  const leaderIds = hasAnyValue ? enriched
-    .filter((item) => item.value === highestValue)
-    .map((item) => item.id) : [];
+  const leaders = data.filter((item) => item.value === highestValue).map((item) => item.id);
+  const lastOnes = !allSame
+    ? data.filter((item) => item.value === lowestValue).map((item) => item.id)
+    : [];
 
-  const lastIds = hasAnyValue && !allSame ? enriched
-    .filter((item) => item.value === lowestValue)
-    .map((item) => item.id) : [];
+  if (leaders.length === 1) {
+    stateMap[leaders[0]] = 'crown';
+  }
 
-  const hasLeadTie = leaderIds.length > 1;
+  lastOnes.forEach((id) => {
+    stateMap[id] = 'sad';
+  });
+
+  return stateMap;
+}
+
+function applyRanking(data) {
+  const enriched = getScales(data);
+  const stateMap = buildStateMap(enriched);
+  const refreshToken = `${IMAGE_VERSION}-${Date.now()}`;
 
   enriched.forEach((item) => {
     const card = document.querySelector(`[data-participant="${item.id}"]`);
@@ -137,38 +143,19 @@ function applyRanking(data) {
 
     const image = card.querySelector('.participant-image');
     const name = card.querySelector('.participant-name');
-    const sticker = card.querySelector('.participant-sticker');
     const config = participantMap[item.id];
-
-    const isLeader = leaderIds.includes(item.id);
-    const isLast = lastIds.includes(item.id);
-
-    let state = 'neutral';
-
-    if (isLeader && !hasLeadTie) {
-      state = 'crown';
-    } else if (isLast) {
-      state = 'sad';
-    }
+    const state = stateMap[item.id] || 'neutral';
 
     card.dataset.state = state;
     card.style.setProperty('--participant-scale', String(item.scale || 1));
     card.classList.toggle('is-leader', state === 'crown');
     card.classList.toggle('is-last', state === 'sad');
-    card.classList.toggle('is-lead-tie', isLeader && hasLeadTie);
-    card.classList.toggle('is-last-tie', false);
+    card.classList.remove('is-lead-tie', 'is-last-tie');
 
     if (image) {
-      const nextSrc = `${config.states[state]}?v=${IMAGE_VERSION}&state=${state}`;
-
-      image.removeAttribute('src');
-      image.src = nextSrc;
+      image.src = `${config.states[state]}?v=${refreshToken}`;
       image.alt = `${config.label} - ${state}`;
-      image.dataset.currentState = state;
-    }
-
-    if (sticker) {
-      sticker.setAttribute('data-state', state);
+      image.dataset.state = state;
     }
 
     if (name) {
@@ -176,6 +163,7 @@ function applyRanking(data) {
     }
   });
 }
+
 async function loadValues() {
   try {
     const response = await fetch(`./valores.txt?t=${Date.now()}`, { cache: 'no-store' });
