@@ -12,7 +12,7 @@
   --lane-width: clamp(116px, 15vw, 280px);
   --lane-gap: clamp(10px, 1.6vw, 30px);
   --stage-height: clamp(180px, 33vh, 420px);
-  --equal-image-height: clamp(150px, 24vh, 300px);
+  --equal-image-height: clamp(150px, 24vh, 280px);
   --name-font-size: clamp(17px, 1.7vw, 32px);
   --bg-offwhite: #f4f0e6;
   --text-dark: #223126;
@@ -181,19 +181,12 @@ img {
 
 @media (max-width: 1180px) {
   :root {
-  --app-min-width: 320px;
-  --app-min-height: 560px;
-  --opella-width: clamp(180px, 18vw, 480px);
-  --grupofarma-width: clamp(58px, 7vw, 150px);
-  --lane-width: clamp(116px, 15vw, 280px);
-  --lane-gap: clamp(10px, 1.6vw, 30px);
-  --stage-height: clamp(180px, 33vh, 420px);
-  --equal-image-height: clamp(138px, 22vh, 260px);
-  --name-font-size: clamp(17px, 1.7vw, 32px);
-  --bg-offwhite: #f4f0e6;
-  --text-dark: #223126;
-  --screen-scale: 1;
-}
+    --screen-scale: 0.92;
+    --lane-width: clamp(112px, 14vw, 230px);
+    --stage-height: clamp(170px, 31vh, 350px);
+    --name-font-size: clamp(16px, 1.6vw, 26px);
+    --equal-image-height: clamp(140px, 22vh, 250px);
+  }
 
   .podium {
     width: min(980px, 100%);
@@ -202,19 +195,12 @@ img {
 
 @media (max-width: 920px) {
   :root {
-  --app-min-width: 320px;
-  --app-min-height: 560px;
-  --opella-width: clamp(180px, 18vw, 480px);
-  --grupofarma-width: clamp(58px, 7vw, 150px);
-  --lane-width: clamp(116px, 15vw, 280px);
-  --lane-gap: clamp(10px, 1.6vw, 30px);
-  --stage-height: clamp(180px, 33vh, 420px);
-  --equal-image-height: clamp(130px, 21vh, 240px);
-  --name-font-size: clamp(17px, 1.7vw, 32px);
-  --bg-offwhite: #f4f0e6;
-  --text-dark: #223126;
-  --screen-scale: 1;
-}
+    --screen-scale: 0.84;
+    --lane-width: clamp(106px, 21vw, 220px);
+    --stage-height: clamp(160px, 28vh, 300px);
+    --name-font-size: clamp(16px, 2.4vw, 24px);
+    --equal-image-height: clamp(132px, 21vh, 220px);
+  }
 
   .podium {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -231,19 +217,14 @@ img {
 
 @media (max-width: 560px) {
   :root {
-  --app-min-width: 320px;
-  --app-min-height: 560px;
-  --opella-width: clamp(180px, 18vw, 480px);
-  --grupofarma-width: clamp(58px, 7vw, 150px);
-  --lane-width: clamp(116px, 15vw, 280px);
-  --lane-gap: clamp(10px, 1.6vw, 30px);
-  --stage-height: clamp(180px, 33vh, 420px);
-  --equal-image-height: clamp(110px, 18vh, 190px);
-  --name-font-size: clamp(17px, 1.7vw, 32px);
-  --bg-offwhite: #f4f0e6;
-  --text-dark: #223126;
-  --screen-scale: 1;
-}
+    --screen-scale: 0.74;
+    --lane-width: clamp(94px, 38vw, 180px);
+    --stage-height: clamp(130px, 23vh, 220px);
+    --name-font-size: clamp(15px, 4.8vw, 22px);
+    --opella-width: clamp(150px, 42vw, 240px);
+    --grupofarma-width: clamp(52px, 17vw, 90px);
+    --equal-image-height: clamp(116px, 18vh, 180px);
+  }
 
   .podium {
     width: min(380px, 100%);
@@ -258,17 +239,9 @@ img {
 
 @media (max-width: 380px) {
   :root {
-  --app-min-width: 320px;
-  --app-min-height: 560px;
-  --opella-width: clamp(180px, 18vw, 480px);
-  --grupofarma-width: clamp(58px, 7vw, 150px);
-  --lane-width: clamp(116px, 15vw, 280px);
-  --lane-gap: clamp(10px, 1.6vw, 30px);
-  --stage-height: clamp(180px, 33vh, 420px);
-  --equal-image-height: clamp(96px, 17vh, 170px);
-  --name-font-size: clamp(17px, 1.7vw, 32px);
-  --bg-offwhite: #f4f0e6;
-  --text-dark: #223126;
-  --screen-scale: 1;
-}
+    --screen-scale: 0.68;
+    --lane-width: clamp(84px, 40vw, 150px);
+    --stage-height: clamp(116px, 22vh, 200px);
+    --equal-image-height: clamp(96px, 17vh, 150px);
+  }
 }

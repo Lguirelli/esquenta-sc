@@ -1,6 +1,8 @@
 const REFRESH_INTERVAL = 5000;
-const SCALE_BASE = 1;
-const SCALE_BOOST = 0.52;
+const SCALE_AVERAGE_SHARE = 0.25;
+const SCALE_SENSITIVITY = 0.90;
+const SCALE_MIN = 0.82;
+const SCALE_MAX = 1.20;
 
 // Equalização visual forçada para o estado inicial: como cada PNG tem recortes e proporções diferentes,
 // cada participante recebe um baseScale compensatório para começar visualmente no mesmo tamanho.
@@ -78,10 +80,12 @@ function getScales(data) {
     }
 
     const share = Math.max(item.value, 0) / total;
-    const scale = SCALE_BASE + share * SCALE_BOOST;
+    const rawScale = 1 + ((share - SCALE_AVERAGE_SHARE) * SCALE_SENSITIVITY);
+    const scale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, rawScale));
 
     return {
       ...item,
+      share,
       scale: Number(scale.toFixed(3))
     };
   });
@@ -174,7 +178,8 @@ function applyRanking(parsedData) {
       participante: participantMap[id].label,
       valor: parsedData.find((entry) => entry.id === id)?.value || 0,
       escala: scaledData.find((entry) => entry.id === id)?.scale || 1,
-      estado: states[id] || 'neutral'
+      estado: states[id] || 'neutral',
+      participacao: (((scaledData.find((entry) => entry.id === id)?.share || 0) * 100).toFixed(2) + '%')
     }))
   );
 }
