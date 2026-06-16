@@ -127,6 +127,8 @@ img {
 .participant {
   --base-scale: 1;
   --rank-scale: 1;
+  --state-scale: 1;
+  --state-shift-y: 0%;
   position: relative;
   min-width: 0;
   width: min(100%, var(--lane-width));
@@ -157,7 +159,7 @@ img {
   object-fit: contain;
   object-position: center bottom;
   transform-origin: center bottom;
-  transform: scale(calc(var(--base-scale) * var(--rank-scale) * var(--screen-scale)));
+  transform: translateY(var(--state-shift-y)) scale(calc(var(--base-scale) * var(--state-scale) * var(--rank-scale) * var(--screen-scale)));
   transition: transform 0.55s ease;
   filter: none;
   mix-blend-mode: multiply;
@@ -186,6 +188,7 @@ img {
     --stage-height: clamp(170px, 31vh, 350px);
     --name-font-size: clamp(16px, 1.6vw, 26px);
     --equal-image-height: clamp(140px, 22vh, 250px);
+    --equal-image-height: clamp(140px, 22vh, 250px);
   }
 
   .podium {
@@ -199,6 +202,7 @@ img {
     --lane-width: clamp(106px, 21vw, 220px);
     --stage-height: clamp(160px, 28vh, 300px);
     --name-font-size: clamp(16px, 2.4vw, 24px);
+    --equal-image-height: clamp(132px, 21vh, 220px);
     --equal-image-height: clamp(132px, 21vh, 220px);
   }
 
@@ -224,6 +228,7 @@ img {
     --opella-width: clamp(150px, 42vw, 240px);
     --grupofarma-width: clamp(52px, 17vw, 90px);
     --equal-image-height: clamp(116px, 18vh, 180px);
+    --equal-image-height: clamp(116px, 18vh, 180px);
   }
 
   .podium {
@@ -243,5 +248,16 @@ img {
     --lane-width: clamp(84px, 40vw, 150px);
     --stage-height: clamp(116px, 22vh, 200px);
     --equal-image-height: clamp(96px, 17vh, 150px);
+    --equal-image-height: clamp(96px, 17vh, 150px);
   }
+}
+
+
+.participant[data-state="crown"] {
+  --state-scale: 1.10;
+  --state-shift-y: -7%;
+}
+
+.participant[data-state="sad"] {
+  --state-scale: 1.01;
 }

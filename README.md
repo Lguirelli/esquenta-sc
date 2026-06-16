@@ -196,3 +196,9 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - quem estiver abaixo dessa média reduz
 - quando todas estiverem zeradas, todas ficam com escala 1
 - a altura inicial das caricaturas foi forçada pelo CSS para começarem visualmente iguais
+
+## Compensação visual da coroa
+
+- a coroa não entra mais visualmente no mesmo enquadramento da escala base
+- quando a participante está em primeiro lugar, a imagem recebe uma compensação específica de estado
+- essa compensação aumenta levemente a caricatura e desloca a imagem para cima, permitindo que a coroa ultrapasse o topo sem aparentar reduzir o rosto
