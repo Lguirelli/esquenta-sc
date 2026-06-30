@@ -1,10 +1,16 @@
 const REFRESH_INTERVAL = 5000;
-const SCALE_MIN = 0.78;
-const SCALE_MAX = 1.14;
+const SCALE_AVERAGE_SHARE = 0.25;
+const SCALE_SENSITIVITY = 0.90;
+const SCALE_MIN = 0.82;
+const SCALE_MAX = 1.20;
+
+// Equalização visual forçada para o estado inicial: como cada PNG tem recortes e proporções diferentes,
+// cada participante recebe um baseScale compensatório para começar visualmente no mesmo tamanho.
 
 const participantMap = {
   michele: {
     label: 'Michele',
+    baseScale: 1,
     states: {
       neutral: './assets/participantes/michele/neutra.png',
       crown: './assets/participantes/michele/coroa.png',
@@ -13,6 +19,7 @@ const participantMap = {
   },
   marcelly: {
     label: 'Marcelly',
+    baseScale: 1,
     states: {
       neutral: './assets/participantes/marcelly/neutra.png',
       crown: './assets/participantes/marcelly/coroa.png',
@@ -21,6 +28,7 @@ const participantMap = {
   },
   pamela: {
     label: 'Pamela',
+    baseScale: 1,
     states: {
       neutral: './assets/participantes/pamela/neutra.png',
       crown: './assets/participantes/pamela/coroa.png',
@@ -29,6 +37,7 @@ const participantMap = {
   },
   yasmin: {
     label: 'Yasmin',
+    baseScale: 1,
     states: {
       neutral: './assets/participantes/yasmin/neutra.png',
       crown: './assets/participantes/yasmin/coroa.png',
@@ -39,14 +48,6 @@ const participantMap = {
 
 const participantOrder = Object.keys(participantMap);
 let lastSnapshot = '';
-
-function normalizeName(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-}
 
 function parseNumber(value) {
   const raw = String(value || '')
@@ -60,45 +61,31 @@ function parseNumber(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function parseValuesTxt(text) {
-  const lines = String(text || '')
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .filter((line) => !line.startsWith('#'));
-
-  const valueMap = new Map();
-
-  lines.forEach((line) => {
-    const match = line.match(/^([^:=\-]+?)\s*[:=-]\s*(.+)$/);
-    if (!match) return;
-
-    const [, rawName, rawValue] = match;
-    valueMap.set(normalizeName(rawName), parseNumber(rawValue));
+function readEmbeddedScores() {
+  return participantOrder.map((id) => {
+    const node = document.querySelector(`[data-score-for="${id}"]`);
+    return {
+      id,
+      value: node ? parseNumber(node.textContent) : 0
+    };
   });
-
-  return participantOrder.map((id) => ({
-    id,
-    value: valueMap.get(normalizeName(participantMap[id].label)) || 0
-  }));
 }
 
 function getScales(data) {
-  const values = data.map((item) => item.value);
-  const maxValue = Math.max(...values, 0);
-  const minValue = Math.min(...values, 0);
-  const spread = maxValue - minValue;
+  const total = data.reduce((acc, item) => acc + Math.max(item.value, 0), 0);
 
   return data.map((item) => {
-    if (maxValue <= 0 || spread <= 0) {
+    if (total <= 0) {
       return { ...item, scale: 1 };
     }
 
-    const ratio = (item.value - minValue) / spread;
-    const scale = SCALE_MIN + ratio * (SCALE_MAX - SCALE_MIN);
+    const share = Math.max(item.value, 0) / total;
+    const rawScale = 1 + ((share - SCALE_AVERAGE_SHARE) * SCALE_SENSITIVITY);
+    const scale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, rawScale));
 
     return {
       ...item,
+      share,
       scale: Number(scale.toFixed(3))
     };
   });
@@ -144,7 +131,8 @@ function updateCard(card, config, state, scale) {
   const name = card.querySelector('.participant-name');
 
   card.dataset.state = state;
-  card.style.setProperty('--participant-scale', String(scale || 1));
+  card.style.setProperty('--rank-scale', String(scale || 1));
+  card.style.setProperty('--base-scale', String(config.baseScale || 1));
   card.classList.toggle('is-leader', state === 'crown');
   card.classList.toggle('is-last', state === 'sad');
 
@@ -189,26 +177,18 @@ function applyRanking(parsedData) {
     participantOrder.map((id) => ({
       participante: participantMap[id].label,
       valor: parsedData.find((entry) => entry.id === id)?.value || 0,
-      estado: states[id] || 'neutral'
+      escala: scaledData.find((entry) => entry.id === id)?.scale || 1,
+      estado: states[id] || 'neutral',
+      participacao: (((scaledData.find((entry) => entry.id === id)?.share || 0) * 100).toFixed(2) + '%')
     }))
   );
 }
 
-async function loadValues() {
-  try {
-    const response = await fetch(`./valores.txt?t=${Date.now()}`, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`Falha ao carregar valores.txt: ${response.status}`);
-    }
-
-    const text = await response.text();
-    const parsedData = parseValuesTxt(text);
-    applyRanking(parsedData);
-  } catch (error) {
-    console.error(error);
-  }
+function refreshRanking() {
+  const parsedData = readEmbeddedScores();
+  applyRanking(parsedData);
 }
 
-loadValues();
-setInterval(loadValues, REFRESH_INTERVAL);
-window.addEventListener('focus', loadValues);
+refreshRanking();
+setInterval(refreshRanking, REFRESH_INTERVAL);
+window.addEventListener('focus', refreshRanking);

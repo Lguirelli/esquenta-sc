@@ -148,3 +148,57 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 
 - removida a sobreposição/filtro de cor do logo da Opella
 - caricaturas configuradas com `mix-blend-mode: multiply` no CSS
+
+## Ajuste do logo
+
+- adicionado drop shadow no logo da Opella para melhorar a separação do fundo
+
+## Ajuste responsivo de escala
+
+- a escala do ranking agora usa `--rank-scale` no JS
+- o CSS adiciona `--screen-scale` para reduzir proporcionalmente em telas menores
+- as imagens diminuem antes de quebrar o grid
+- abaixo de 920px o layout quebra para 2 colunas
+- abaixo de 560px o tamanho das imagens, logos e nomes é reduzido novamente
+
+## Equalização da escala zerada
+
+- o desbalanceamento visual quando todas estavam zeradas acontecia porque as caricaturas estavam sendo dimensionadas pela largura do card
+- agora as caricaturas usam `max-height: 100%` dentro de um stage com altura padronizada
+- com isso, quando todas estão com escala 1, passam a aparentar o mesmo tamanho base
+
+## Valores embutidos no index
+
+- os valores do ranking agora ficam no próprio `index.html`, dentro do bloco oculto `#ranking-source`
+- esse bloco não aparece na página
+- para atualizar o ranking, edite apenas os números dos elementos `data-score-for`
+- a escala agora parte de um tamanho base igual para todas e cresce conforme a participação de cada pessoa no total de positivação
+- quando todas estiverem zeradas, as quatro permanecem com a mesma proporção visual
+
+## Limitação inicial de tamanho
+
+- foi adicionada uma normalização inicial por participante com `baseScale`
+- isso garante que as quatro comecem visualmente mais próximas da mesma escala
+- a escala dinâmica continua reagindo ao total de positivação, mas agora parte de uma base equalizada
+
+## Equalização visual forçada
+
+- foi aplicada uma equalização inicial mais forte por participante
+- isso compensa diferenças de corte e proporção dos PNGs
+- agora as quatro começam visualmente muito mais próximas do mesmo tamanho
+- depois disso, a escala dinâmica continua crescendo de acordo com a participação no total de positivação
+
+## Ajuste da escala pelo total das 4
+
+- a escala agora é calculada pela participação de cada pessoa sobre a soma das 4 positivaçãoes
+- a participação média é 25%
+- quem estiver acima dessa média cresce
+- quem estiver abaixo dessa média reduz
+- quando todas estiverem zeradas, todas ficam com escala 1
+- a altura inicial das caricaturas foi forçada pelo CSS para começarem visualmente iguais
+
+## Compensação visual da coroa
+
+- a coroa não entra mais visualmente no mesmo enquadramento da escala base
+- quando a participante está em primeiro lugar, a imagem recebe uma compensação específica de estado
+- essa compensação aumenta levemente a caricatura e desloca a imagem para cima, permitindo que a coroa ultrapasse o topo sem aparentar reduzir o rosto

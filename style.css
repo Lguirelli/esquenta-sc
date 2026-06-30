@@ -7,14 +7,16 @@
 :root {
   --app-min-width: 320px;
   --app-min-height: 560px;
-  --opella-width: clamp(240px, 24vw, 480px);
-  --grupofarma-width: clamp(70px, 9vw, 150px);
-  --lane-width: clamp(170px, 19vw, 280px);
-  --lane-gap: clamp(16px, 2vw, 30px);
-  --stage-height: clamp(240px, 40vh, 440px);
-  --name-font-size: clamp(22px, 2.1vw, 32px);
-  --bg-offwhite: #f4f0e6;
+  --opella-width: clamp(180px, 18vw, 480px);
+  --grupofarma-width: clamp(58px, 7vw, 150px);
+  --lane-width: clamp(116px, 15vw, 280px);
+  --lane-gap: clamp(10px, 1.6vw, 30px);
+  --stage-height: clamp(180px, 33vh, 420px);
+  --equal-image-height: clamp(150px, 24vh, 280px);
+  --name-font-size: clamp(17px, 1.7vw, 32px);
+  --bg-offwhite: #103890;
   --text-dark: #223126;
+  --screen-scale: 1;
 }
 
 html,
@@ -50,18 +52,6 @@ img {
   background: var(--bg-offwhite);
 }
 
-.background-screen::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('./assets/textures/background-paper.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.32;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  z-index: 1;
-}
 
 .brand-header,
 .brand-footer {
@@ -94,8 +84,8 @@ img {
 
 .brand-logo-opella {
   width: var(--opella-width);
-  filter: none;
   opacity: 1;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.14));
 }
 
 .brand-logo-grupofarma {
@@ -110,45 +100,54 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(90px, 14vh, 140px) clamp(16px, 4vw, 48px) clamp(80px, 12vh, 130px);
+  padding: clamp(74px, 13vh, 140px) clamp(12px, 3vw, 48px) clamp(64px, 10vh, 130px);
 }
 
 .podium {
-  width: min(1240px, 100%);
+  width: min(1120px, 100%);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--lane-gap);
   align-items: end;
+  justify-items: center;
 }
 
 .participant {
-  --participant-scale: 1;
+  --base-scale: 1;
+  --rank-scale: 1;
+  --state-scale: 1;
+  --state-shift-y: 0%;
   position: relative;
   min-width: 0;
+  width: min(100%, var(--lane-width));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
-  gap: 8px;
+  gap: clamp(5px, 0.8vw, 8px);
 }
 
 .participant-stage {
   position: relative;
-  width: min(100%, var(--lane-width));
+  width: 100%;
   height: var(--stage-height);
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: center;
+  overflow: visible;
 }
 
 .participant-image {
   position: relative;
   z-index: 1;
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: var(--equal-image-height);
+  max-width: none;
+  max-height: none;
   object-fit: contain;
+  object-position: center bottom;
   transform-origin: center bottom;
-  transform: scale(var(--participant-scale));
+  transform: translateY(var(--state-shift-y)) scale(calc(var(--base-scale) * var(--state-scale) * var(--rank-scale) * var(--screen-scale)));
   transition: transform 0.55s ease;
   filter: none;
   mix-blend-mode: multiply;
@@ -170,30 +169,83 @@ img {
   text-shadow: none;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
   :root {
-    --stage-height: clamp(210px, 34vh, 360px);
-    --lane-width: min(100%, 240px);
+    --screen-scale: 0.92;
+    --lane-width: clamp(112px, 14vw, 230px);
+    --stage-height: clamp(170px, 31vh, 350px);
+    --name-font-size: clamp(16px, 1.6vw, 26px);
+    --equal-image-height: clamp(140px, 22vh, 250px);
+    --equal-image-height: clamp(140px, 22vh, 250px);
+  }
+
+  .podium {
+    width: min(980px, 100%);
+  }
+}
+
+@media (max-width: 920px) {
+  :root {
+    --screen-scale: 0.84;
+    --lane-width: clamp(106px, 21vw, 220px);
+    --stage-height: clamp(160px, 28vh, 300px);
+    --name-font-size: clamp(16px, 2.4vw, 24px);
+    --equal-image-height: clamp(132px, 21vh, 220px);
+    --equal-image-height: clamp(132px, 21vh, 220px);
   }
 
   .podium {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 22px;
+    width: min(620px, 100%);
+    row-gap: clamp(10px, 3vh, 22px);
+    column-gap: clamp(10px, 4vw, 28px);
+  }
+
+  .ranking-area {
+    padding-top: clamp(82px, 12vh, 120px);
+    padding-bottom: clamp(70px, 10vh, 110px);
   }
 }
 
 @media (max-width: 560px) {
   :root {
-    --name-font-size: clamp(18px, 4.8vw, 24px);
-    --stage-height: clamp(190px, 28vh, 280px);
-  }
-
-  .ranking-area {
-    padding-top: clamp(84px, 12vh, 110px);
-    padding-bottom: clamp(80px, 10vh, 100px);
+    --screen-scale: 0.74;
+    --lane-width: clamp(94px, 38vw, 180px);
+    --stage-height: clamp(130px, 23vh, 220px);
+    --name-font-size: clamp(15px, 4.8vw, 22px);
+    --opella-width: clamp(150px, 42vw, 240px);
+    --grupofarma-width: clamp(52px, 17vw, 90px);
+    --equal-image-height: clamp(116px, 18vh, 180px);
+    --equal-image-height: clamp(116px, 18vh, 180px);
   }
 
   .podium {
-    gap: 16px 14px;
+    width: min(380px, 100%);
+    gap: clamp(8px, 2.5vw, 14px);
   }
+
+  .ranking-area {
+    padding-top: clamp(72px, 11vh, 96px);
+    padding-bottom: clamp(62px, 9vh, 90px);
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --screen-scale: 0.68;
+    --lane-width: clamp(84px, 40vw, 150px);
+    --stage-height: clamp(116px, 22vh, 200px);
+    --equal-image-height: clamp(96px, 17vh, 150px);
+    --equal-image-height: clamp(96px, 17vh, 150px);
+  }
+}
+
+
+.participant[data-state="crown"] {
+  --state-scale: 1.10;
+  --state-shift-y: -7%;
+}
+
+.participant[data-state="sad"] {
+  --state-scale: 1.01;
 }
