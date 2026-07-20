@@ -162,7 +162,7 @@ img {
   display: inline-block;
   min-width: 0;
   padding: 0;
-  color: var(--text-dark);
+  color: #ffffff;
   font-size: var(--name-font-size);
   font-weight: 700;
   line-height: 1;
@@ -249,4 +249,11 @@ img {
 
 .participant[data-state="sad"] {
   --state-scale: 1.01;
+}
+
+
+.logo-video {
+    background: transparent;
+    display: block;
+    object-fit: contain;
 }
