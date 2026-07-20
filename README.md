@@ -202,3 +202,10 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 - a coroa não entra mais visualmente no mesmo enquadramento da escala base
 - quando a participante está em primeiro lugar, a imagem recebe uma compensação específica de estado
 - essa compensação aumenta levemente a caricatura e desloca a imagem para cima, permitindo que a coroa ultrapasse o topo sem aparentar reduzir o rosto
+
+
+## Participantes
+
+O projeto agora está preparado para 5 participantes: Michele, Marcelly, Pamela, Yasmin e Alicia.
+A pasta `assets/participantes/alicia/` foi criada com imagens placeholder temporárias (`neutra.png`, `coroa.png` e `triste.png`).
+Substitua esses arquivos pelas artes finais da Alicia mantendo exatamente os mesmos nomes.
