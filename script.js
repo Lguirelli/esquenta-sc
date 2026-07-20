@@ -55,7 +55,7 @@ const participantMap = {
   }
 };
 
-const participantOrder = Object.keys(participantMap);
+const participantOrder = ['alicia', 'marcelly', 'michele', 'pamela', 'yasmin'];
 let lastSnapshot = '';
 
 function parseNumber(value) {
