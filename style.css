@@ -9,7 +9,7 @@
   --app-min-height: 560px;
   --esquenta-sc-width: clamp(180px, 18vw, 480px);
   --grupofarma-width: clamp(58px, 7vw, 150px);
-  --lane-width: clamp(116px, 15vw, 280px);
+  --lane-width: clamp(104px, 13vw, 240px);
   --lane-gap: clamp(10px, 1.6vw, 30px);
   --stage-height: clamp(180px, 33vh, 420px);
   --equal-image-height: clamp(150px, 24vh, 280px);
@@ -105,9 +105,9 @@ img {
 }
 
 .podium {
-  width: min(1120px, 100%);
+  width: min(1320px, 100%);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--lane-gap);
   align-items: end;
   justify-items: center;
@@ -196,7 +196,7 @@ img {
   }
 
   .podium {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: min(620px, 100%);
     row-gap: clamp(10px, 3vh, 22px);
     column-gap: clamp(10px, 4vw, 28px);
@@ -205,6 +205,13 @@ img {
   .ranking-area {
     padding-top: clamp(82px, 12vh, 120px);
     padding-bottom: clamp(70px, 10vh, 110px);
+  }
+}
+
+@media (max-width: 720px) {
+  .podium {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(420px, 100%);
   }
 }
 

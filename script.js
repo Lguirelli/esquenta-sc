@@ -1,5 +1,5 @@
 const REFRESH_INTERVAL = 5000;
-const SCALE_AVERAGE_SHARE = 0.25;
+const SCALE_AVERAGE_SHARE = 0.20;
 const SCALE_SENSITIVITY = 0.90;
 const SCALE_MIN = 0.82;
 const SCALE_MAX = 1.20;
@@ -42,6 +42,15 @@ const participantMap = {
       neutral: './assets/participantes/yasmin/neutra.png',
       crown: './assets/participantes/yasmin/coroa.png',
       sad: './assets/participantes/yasmin/triste.png'
+    }
+  },
+  alicia: {
+    label: 'Alicia',
+    baseScale: 1,
+    states: {
+      neutral: './assets/participantes/alicia/neutra.png',
+      crown: './assets/participantes/alicia/coroa.png',
+      sad: './assets/participantes/alicia/triste.png'
     }
   }
 };
