@@ -14,8 +14,8 @@
   --stage-height: clamp(180px, 33vh, 420px);
   --equal-image-height: clamp(150px, 24vh, 280px);
   --name-font-size: clamp(17px, 1.7vw, 32px);
-  --bg-offwhite: #103890;
-  --text-dark: #223126;
+  --bg-offwhite: #000000;
+  --text-dark: #ffffff;
   --screen-scale: 1;
 }
 
@@ -24,7 +24,7 @@ body {
   width: 100%;
   min-width: var(--app-min-width);
   min-height: 100%;
-  background: var(--bg-offwhite);
+  background: #000000;
   font-family: "Anek Kannada", Arial, Helvetica, sans-serif;
 }
 
@@ -49,7 +49,7 @@ img {
 }
 
 .background-screen {
-  background: var(--bg-offwhite);
+  background: #000000;
 }
 
 
