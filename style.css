@@ -7,7 +7,7 @@
 :root {
   --app-min-width: 320px;
   --app-min-height: 560px;
-  --opella-width: clamp(180px, 18vw, 480px);
+  --esquenta-sc-width: clamp(180px, 18vw, 480px);
   --grupofarma-width: clamp(58px, 7vw, 150px);
   --lane-width: clamp(116px, 15vw, 280px);
   --lane-gap: clamp(10px, 1.6vw, 30px);
@@ -78,12 +78,13 @@ img {
 .brand-logo {
   height: auto;
   object-fit: contain;
+  display: block;
   user-select: none;
   opacity: 0.96;
 }
 
-.brand-logo-opella {
-  width: var(--opella-width);
+.brand-logo-esquenta-sc {
+  width: var(--esquenta-sc-width);
   opacity: 1;
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.14));
 }
@@ -213,7 +214,7 @@ img {
     --lane-width: clamp(94px, 38vw, 180px);
     --stage-height: clamp(130px, 23vh, 220px);
     --name-font-size: clamp(15px, 4.8vw, 22px);
-    --opella-width: clamp(150px, 42vw, 240px);
+    --esquenta-sc-width: clamp(150px, 42vw, 240px);
     --grupofarma-width: clamp(52px, 17vw, 90px);
     --equal-image-height: clamp(116px, 18vh, 180px);
     --equal-image-height: clamp(116px, 18vh, 180px);
