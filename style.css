@@ -196,7 +196,7 @@ img {
   }
 
   .podium {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: min(620px, 100%);
     row-gap: clamp(10px, 3vh, 22px);
     column-gap: clamp(10px, 4vw, 28px);
