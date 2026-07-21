@@ -116,13 +116,14 @@ video {
   --rank-scale: 1;
   --base-scale: 1;
   width: 100%;
+  max-width: 620px;
   display: flex;
   justify-content: center;
 }
 
 .participant-stage {
   width: 100%;
-  min-height: 64px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,5 +189,27 @@ video {
 
   .participant-stage {
     min-height: 58px;
+  }
+}
+
+
+/* Layout em lista vertical */
+.podium {
+  gap: clamp(12px, 2vh, 22px);
+}
+
+.participant-stage {
+  justify-content: flex-start;
+  padding-left: clamp(24px, 4vw, 48px);
+}
+
+.participant-name {
+  text-align: left;
+  width: 100%;
+}
+
+@media (max-width: 560px) {
+  .participant-stage {
+    min-height: 56px;
   }
 }
