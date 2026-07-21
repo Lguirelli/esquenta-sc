@@ -209,3 +209,21 @@ Não é necessário usar `background-base.png` ou `background-full.png`.
 O projeto agora está preparado para 5 participantes: Michele, Marcelly, Pamela, Yasmin e Alicia.
 A pasta `assets/participantes/alicia/` foi criada com imagens placeholder temporárias (`neutra.png`, `coroa.png` e `triste.png`).
 Substitua esses arquivos pelas artes finais da Alicia mantendo exatamente os mesmos nomes.
+
+
+## Versão simplificada
+
+Esta versão foi adaptada para exibir apenas uma lista com os nomes das participantes, mantendo a ideia de escala visual.
+
+Como funciona:
+- Atualize os valores no bloco oculto `ranking-source` dentro do `index.html`.
+- O tamanho visual de cada nome aumenta ou diminui conforme a participação no total.
+- A líder recebe destaque visual no card.
+- A última colocada recebe um tratamento mais discreto.
+
+Participantes em ordem alfabética:
+- Alicia
+- Marcelly
+- Michele
+- Pamela
+- Yasmin

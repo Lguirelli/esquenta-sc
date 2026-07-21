@@ -1,58 +1,15 @@
 const REFRESH_INTERVAL = 5000;
 const SCALE_AVERAGE_SHARE = 0.20;
-const SCALE_SENSITIVITY = 0.90;
+const SCALE_SENSITIVITY = 1.10;
 const SCALE_MIN = 0.82;
-const SCALE_MAX = 1.20;
-
-// Equalização visual forçada para o estado inicial: como cada PNG tem recortes e proporções diferentes,
-// cada participante recebe um baseScale compensatório para começar visualmente no mesmo tamanho.
+const SCALE_MAX = 1.24;
 
 const participantMap = {
-  michele: {
-    label: 'Michele',
-    baseScale: 1,
-    states: {
-      neutral: './assets/participantes/michele/neutra.png',
-      crown: './assets/participantes/michele/coroa.png',
-      sad: './assets/participantes/michele/triste.png'
-    }
-  },
-  marcelly: {
-    label: 'Marcelly',
-    baseScale: 1,
-    states: {
-      neutral: './assets/participantes/marcelly/neutra.png',
-      crown: './assets/participantes/marcelly/coroa.png',
-      sad: './assets/participantes/marcelly/triste.png'
-    }
-  },
-  pamela: {
-    label: 'Pamela',
-    baseScale: 1,
-    states: {
-      neutral: './assets/participantes/pamela/neutra.png',
-      crown: './assets/participantes/pamela/coroa.png',
-      sad: './assets/participantes/pamela/triste.png'
-    }
-  },
-  yasmin: {
-    label: 'Yasmin',
-    baseScale: 1,
-    states: {
-      neutral: './assets/participantes/yasmin/neutra.png',
-      crown: './assets/participantes/yasmin/coroa.png',
-      sad: './assets/participantes/yasmin/triste.png'
-    }
-  },
-  alicia: {
-    label: 'Alicia',
-    baseScale: 1,
-    states: {
-      neutral: './assets/participantes/alicia/neutra.png',
-      crown: './assets/participantes/alicia/coroa.png',
-      sad: './assets/participantes/alicia/triste.png'
-    }
-  }
+  alicia: { label: 'Alicia', baseScale: 1 },
+  marcelly: { label: 'Marcelly', baseScale: 1 },
+  michele: { label: 'Michele', baseScale: 1 },
+  pamela: { label: 'Pamela', baseScale: 1 },
+  yasmin: { label: 'Yasmin', baseScale: 1 }
 };
 
 const participantOrder = ['alicia', 'marcelly', 'michele', 'pamela', 'yasmin'];
@@ -85,7 +42,7 @@ function getScales(data) {
 
   return data.map((item) => {
     if (total <= 0) {
-      return { ...item, scale: 1 };
+      return { ...item, share: 0, scale: 1 };
     }
 
     const share = Math.max(item.value, 0) / total;
@@ -116,11 +73,11 @@ function resolveStates(data) {
   const lastIds = allSame ? [] : data.filter((item) => item.value === lowestValue).map((item) => item.id);
 
   if (leaderIds.length === 1) {
-    states[leaderIds[0]] = 'crown';
+    states[leaderIds[0]] = 'leader';
   }
 
   lastIds.forEach((id) => {
-    states[id] = 'sad';
+    states[id] = 'last';
   });
 
   return states;
@@ -136,27 +93,21 @@ function buildSnapshot(data, states) {
 }
 
 function updateCard(card, config, state, scale) {
-  const image = card.querySelector('.participant-image');
   const name = card.querySelector('.participant-name');
+  const stage = card.querySelector('.participant-stage');
 
   card.dataset.state = state;
   card.style.setProperty('--rank-scale', String(scale || 1));
   card.style.setProperty('--base-scale', String(config.baseScale || 1));
-  card.classList.toggle('is-leader', state === 'crown');
-  card.classList.toggle('is-last', state === 'sad');
-
-  if (image) {
-    const desiredSrc = config.states[state];
-    if (image.dataset.currentState !== state || image.dataset.currentSrc !== desiredSrc) {
-      image.src = desiredSrc;
-      image.dataset.currentState = state;
-      image.dataset.currentSrc = desiredSrc;
-    }
-    image.alt = `${config.label} - ${state}`;
-  }
+  card.classList.toggle('is-leader', state === 'leader');
+  card.classList.toggle('is-last', state === 'last');
 
   if (name) {
     name.textContent = config.label;
+  }
+
+  if (stage) {
+    stage.setAttribute('aria-label', `${config.label} - ${state}`);
   }
 }
 
@@ -165,10 +116,7 @@ function applyRanking(parsedData) {
   const states = resolveStates(parsedData);
   const snapshot = buildSnapshot(scaledData, states);
 
-  if (snapshot === lastSnapshot) {
-    return;
-  }
-
+  if (snapshot === lastSnapshot) return;
   lastSnapshot = snapshot;
 
   participantOrder.forEach((id) => {
@@ -178,7 +126,6 @@ function applyRanking(parsedData) {
     const config = participantMap[id];
     const item = scaledData.find((entry) => entry.id === id) || { id, value: 0, scale: 1 };
     const state = states[id] || 'neutral';
-
     updateCard(card, config, state, item.scale);
   });
 
@@ -194,8 +141,7 @@ function applyRanking(parsedData) {
 }
 
 function refreshRanking() {
-  const parsedData = readEmbeddedScores();
-  applyRanking(parsedData);
+  applyRanking(readEmbeddedScores());
 }
 
 refreshRanking();
