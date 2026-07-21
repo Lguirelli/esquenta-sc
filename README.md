@@ -258,3 +258,8 @@ Esta versão foi ajustada para:
 - alternar automaticamente o lado da foto e do nome conforme a posição atual de cada card no ranking;
 - reordenar o podium do maior valor para o menor valor;
 - aplicar uma escala responsiva dinâmica no conjunto do podium para evitar sobreposição em telas menores.
+
+
+## Padding lateral das fotos
+
+As fotos permanecem alinhadas às laterais do box, mas agora possuem um recuo lateral responsivo para não encostarem diretamente na borda arredondada.

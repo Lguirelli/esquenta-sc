@@ -13,6 +13,7 @@
   --row-gap: clamp(10px, 1.5vh, 18px);
   --name-font-size: clamp(18px, 1.9vw, 29px);
   --photo-slot: clamp(76px, 10vw, 112px);
+  --photo-edge-gap: clamp(10px, 1.4vw, 18px);
   --stage-height: clamp(68px, 8.8vh, 92px);
   --pill-radius: 999px;
   --bg-screen: #000000;
@@ -138,13 +139,13 @@ video {
 .participant[data-layout="photo-right"] .participant-stage {
   justify-content: flex-start;
   padding-left: clamp(22px, 3vw, 36px);
-  padding-right: calc(var(--photo-slot) + clamp(16px, 2vw, 28px));
+  padding-right: calc(var(--photo-slot) + var(--photo-edge-gap) + clamp(16px, 2vw, 28px));
 }
 
 .participant[data-layout="photo-left"] .participant-stage {
   justify-content: flex-end;
   padding-right: clamp(22px, 3vw, 36px);
-  padding-left: calc(var(--photo-slot) + clamp(16px, 2vw, 28px));
+  padding-left: calc(var(--photo-slot) + var(--photo-edge-gap) + clamp(16px, 2vw, 28px));
 }
 
 .participant-name {
@@ -174,12 +175,12 @@ video {
 }
 
 .participant[data-layout="photo-right"] .participant-photo-wrap {
-  right: 0;
+  right: var(--photo-edge-gap);
   justify-content: flex-end;
 }
 
 .participant[data-layout="photo-left"] .participant-photo-wrap {
-  left: 0;
+  left: var(--photo-edge-gap);
   justify-content: flex-start;
 }
 
@@ -222,6 +223,7 @@ video {
 @media (max-width: 680px) {
   :root {
     --row-width: min(560px, 94vw);
+    --photo-edge-gap: 8px;
     --photo-slot: clamp(64px, 18vw, 88px);
     --name-font-size: clamp(15px, 4.2vw, 22px);
     --stage-height: clamp(60px, 9vh, 78px);
@@ -231,12 +233,12 @@ video {
 
   .participant[data-layout="photo-right"] .participant-stage {
     padding-left: 20px;
-    padding-right: calc(var(--photo-slot) + 14px);
+    padding-right: calc(var(--photo-slot) + var(--photo-edge-gap) + 14px);
   }
 
   .participant[data-layout="photo-left"] .participant-stage {
     padding-right: 20px;
-    padding-left: calc(var(--photo-slot) + 14px);
+    padding-left: calc(var(--photo-slot) + var(--photo-edge-gap) + 14px);
   }
 }
 
