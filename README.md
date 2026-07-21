@@ -241,3 +241,12 @@ Mapeamento das fotos usadas:
 - Yasmin: `assets/fotos/yasmin.png`
 
 O layout alterna a posição da foto entre direita e esquerda ao longo da lista.
+
+
+## Ajustes de podium
+
+Nesta versão:
+- as fotos foram ampliadas e ajustadas a partir do topo do box;
+- o logo principal foi reduzido;
+- a ordem visual do podium agora é dinâmica, do maior valor para o menor valor;
+- em caso de empate, a ordenação secundária é alfabética.

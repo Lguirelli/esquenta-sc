@@ -116,6 +116,30 @@ function updateCard(card, config, state, scale) {
   }
 }
 
+
+function sortCardsByRanking(parsedData) {
+  const podium = document.getElementById('podium');
+  if (!podium) return;
+
+  const scoreMap = Object.fromEntries(parsedData.map((item) => [item.id, item.value]));
+  const cards = Array.from(podium.querySelectorAll('.participant'));
+
+  cards.sort((cardA, cardB) => {
+    const idA = cardA.dataset.participant;
+    const idB = cardB.dataset.participant;
+    const scoreA = scoreMap[idA] ?? 0;
+    const scoreB = scoreMap[idB] ?? 0;
+
+    if (scoreB !== scoreA) return scoreB - scoreA;
+
+    const labelA = participantMap[idA]?.label || idA;
+    const labelB = participantMap[idB]?.label || idB;
+    return labelA.localeCompare(labelB, 'pt-BR');
+  });
+
+  cards.forEach((card) => podium.appendChild(card));
+}
+
 function applyRanking(parsedData) {
   const scaledData = getScales(parsedData);
   const states = resolveStates(parsedData);
@@ -133,6 +157,8 @@ function applyRanking(parsedData) {
     const state = states[id] || 'neutral';
     updateCard(card, config, state, item.scale);
   });
+
+  sortCardsByRanking(parsedData);
 
   console.table(
     participantOrder.map((id) => ({
