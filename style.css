@@ -135,13 +135,13 @@ video {
 .participant:nth-child(odd) .participant-stage {
   justify-content: flex-start;
   padding-left: calc(34px * var(--rank-scale));
-  padding-right: calc(178px * var(--rank-scale));
+  padding-right: calc(200px * var(--rank-scale));
 }
 
 .participant:nth-child(even) .participant-stage {
   justify-content: flex-end;
   padding-right: calc(34px * var(--rank-scale));
-  padding-left: calc(178px * var(--rank-scale));
+  padding-left: calc(200px * var(--rank-scale));
 }
 
 .participant-name {
@@ -161,7 +161,7 @@ video {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: min(250px, 36%);
+  width: min(210px, 30%);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -179,7 +179,7 @@ video {
 
 .participant-photo {
   width: 100%;
-  height: 340%;
+  height: 240%;
   max-width: none;
   object-fit: contain;
   object-position: center top;
@@ -188,20 +188,20 @@ video {
 }
 
 .participant[data-participant="michele"] .participant-photo {
-  height: 360%;
+  height: 255%;
 }
 
 .participant[data-participant="marcelly"] .participant-photo {
-  height: 360%;
+  height: 255%;
 }
 
 .participant[data-participant="pamela"] .participant-photo,
 .participant[data-participant="yasmin"] .participant-photo {
-  height: 352%;
+  height: 248%;
 }
 
 .participant[data-participant="alicia"] .participant-photo {
-  height: 350%;
+  height: 250%;
 }
 
 .participant[data-state="leader"] .participant-stage {
@@ -249,16 +249,16 @@ video {
   }
 
   .participant-photo-wrap {
-    width: min(190px, 40%);
+    width: min(150px, 32%);
   }
 
   .participant:nth-child(odd) .participant-stage {
     padding-left: 22px;
-    padding-right: 138px;
+    padding-right: 118px;
   }
 
   .participant:nth-child(even) .participant-stage {
     padding-right: 22px;
-    padding-left: 138px;
+    padding-left: 118px;
   }
 }
