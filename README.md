@@ -263,3 +263,9 @@ Esta versão foi ajustada para:
 ## Padding lateral das fotos
 
 As fotos permanecem alinhadas às laterais do box, mas agora possuem um recuo lateral responsivo para não encostarem diretamente na borda arredondada.
+
+
+## Escala lateral das barras
+
+Nesta versão, a escala do ranking altera a largura horizontal de cada barra, em vez de aumentar ou diminuir o box por completo.
+A barra da líder fica com a maior largura, e as demais reduzem lateralmente de forma proporcional, mantendo altura e tipografia mais estáveis.

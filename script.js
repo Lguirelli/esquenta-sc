@@ -38,16 +38,21 @@ function readEmbeddedScores() {
 }
 
 function getScales(data) {
-  const total = data.reduce((acc, item) => acc + Math.max(item.value, 0), 0);
+  const positiveValues = data.map((item) => Math.max(item.value, 0));
+  const total = positiveValues.reduce((acc, value) => acc + value, 0);
+  const highestValue = Math.max(0, ...positiveValues);
 
   return data.map((item) => {
-    if (total <= 0) {
-      return { ...item, share: 0, scale: 1 };
+    const safeValue = Math.max(item.value, 0);
+    const share = total > 0 ? safeValue / total : 0;
+
+    if (highestValue <= 0) {
+      return { ...item, share, scale: 1 };
     }
 
-    const share = Math.max(item.value, 0) / total;
-    const rawScale = 1 + ((share - SCALE_AVERAGE_SHARE) * SCALE_SENSITIVITY);
-    const scale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, rawScale));
+    const ratioToLeader = safeValue / highestValue;
+    const lateralScale = 0.82 + (0.18 * ratioToLeader);
+    const scale = Math.max(0.82, Math.min(1, lateralScale));
 
     return {
       ...item,
@@ -98,8 +103,9 @@ function updateCard(card, config, state, scale) {
   const photo = card.querySelector('.participant-photo');
 
   card.dataset.state = state;
-  card.style.setProperty('--rank-scale', String(scale || 1));
+  card.style.setProperty('--bar-scale', String(scale || 1));
   card.style.setProperty('--base-scale', String(config.baseScale || 1));
+  card.style.setProperty('--rank-scale', '1');
   card.classList.toggle('is-leader', state === 'leader');
   card.classList.toggle('is-last', state === 'last');
 

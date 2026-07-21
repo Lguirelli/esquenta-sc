@@ -20,6 +20,7 @@
   --white: #ffffff;
   --orange: #ef5b2a;
   --viewport-scale: 1;
+  --bar-scale: 1;
 }
 
 html,
@@ -117,14 +118,26 @@ video {
 .participant {
   --rank-scale: 1;
   --base-scale: 1;
+  --bar-scale: 1;
   width: 100%;
   flex: 0 0 auto;
+  display: flex;
+}
+
+.participant[data-layout="photo-right"] {
+  justify-content: flex-start;
+}
+
+.participant[data-layout="photo-left"] {
+  justify-content: flex-end;
 }
 
 .participant-stage {
   position: relative;
   width: 100%;
-  height: calc(var(--stage-height) * var(--rank-scale));
+  width: calc(100% * var(--bar-scale));
+  max-width: 100%;
+  height: var(--stage-height);
   min-height: 56px;
   border-radius: var(--pill-radius);
   background: var(--white);
@@ -153,7 +166,7 @@ video {
   z-index: 3;
   display: inline-block;
   color: var(--orange);
-  font-size: calc(var(--name-font-size) * var(--rank-scale));
+  font-size: var(--name-font-size);
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.02em;
