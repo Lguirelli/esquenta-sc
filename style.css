@@ -122,14 +122,7 @@ video {
   width: 100%;
   flex: 0 0 auto;
   display: flex;
-}
-
-.participant[data-layout="photo-right"] {
-  justify-content: flex-start;
-}
-
-.participant[data-layout="photo-left"] {
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .participant-stage {

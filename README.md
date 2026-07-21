@@ -269,3 +269,8 @@ As fotos permanecem alinhadas às laterais do box, mas agora possuem um recuo la
 
 Nesta versão, a escala do ranking altera a largura horizontal de cada barra, em vez de aumentar ou diminuir o box por completo.
 A barra da líder fica com a maior largura, e as demais reduzem lateralmente de forma proporcional, mantendo altura e tipografia mais estáveis.
+
+
+## Barras centralizadas
+
+Nesta versão, a escala lateral reduz ou amplia a largura das barras mantendo todas alinhadas ao centro do layout.
