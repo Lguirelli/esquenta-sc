@@ -159,21 +159,23 @@ function fitPodiumToViewport() {
 
   podium.style.setProperty('--viewport-scale', '1');
 
-  const availableHeight = Math.max(1, rankingArea.clientHeight - 8);
-  const availableWidth = Math.max(1, rankingArea.clientWidth - 8);
-  const contentHeight = Math.max(1, podium.scrollHeight);
-  const contentWidth = Math.max(1, podium.scrollWidth);
+  requestAnimationFrame(() => {
+    const availableHeight = Math.max(1, rankingArea.clientHeight - 10);
+    const availableWidth = Math.max(1, rankingArea.clientWidth - 10);
+    const contentHeight = Math.max(1, podium.offsetHeight);
+    const contentWidth = Math.max(1, podium.offsetWidth);
 
-  const scaleH = Math.min(1, availableHeight / contentHeight);
-  const scaleW = Math.min(1, availableWidth / contentWidth);
-  const finalScale = Math.max(0.62, Math.min(scaleH, scaleW, 1));
+    const scaleH = availableHeight / contentHeight;
+    const scaleW = availableWidth / contentWidth;
+    const finalScale = Math.max(0.56, Math.min(1, scaleH, scaleW));
 
-  podium.style.setProperty('--viewport-scale', String(Number(finalScale.toFixed(3))));
+    podium.style.setProperty('--viewport-scale', String(Number(finalScale.toFixed(3))));
+  });
 }
 
 function updateLayoutBehavior() {
   applyAlternatingLayout();
-  fitPodiumToViewport();
+  requestAnimationFrame(fitPodiumToViewport);
 }
 
 function applyRanking(parsedData) {
