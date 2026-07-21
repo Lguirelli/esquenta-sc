@@ -140,6 +140,42 @@ function sortCardsByRanking(parsedData) {
   cards.forEach((card) => podium.appendChild(card));
 }
 
+
+function applyAlternatingLayout() {
+  const podium = document.getElementById('podium');
+  if (!podium) return;
+
+  const cards = Array.from(podium.querySelectorAll('.participant'));
+  cards.forEach((card, index) => {
+    const layout = index % 2 === 0 ? 'photo-right' : 'photo-left';
+    card.dataset.layout = layout;
+  });
+}
+
+function fitPodiumToViewport() {
+  const podium = document.getElementById('podium');
+  const rankingArea = document.querySelector('.ranking-area');
+  if (!podium || !rankingArea) return;
+
+  podium.style.setProperty('--viewport-scale', '1');
+
+  const availableHeight = Math.max(1, rankingArea.clientHeight - 8);
+  const availableWidth = Math.max(1, rankingArea.clientWidth - 8);
+  const contentHeight = Math.max(1, podium.scrollHeight);
+  const contentWidth = Math.max(1, podium.scrollWidth);
+
+  const scaleH = Math.min(1, availableHeight / contentHeight);
+  const scaleW = Math.min(1, availableWidth / contentWidth);
+  const finalScale = Math.max(0.62, Math.min(scaleH, scaleW, 1));
+
+  podium.style.setProperty('--viewport-scale', String(Number(finalScale.toFixed(3))));
+}
+
+function updateLayoutBehavior() {
+  applyAlternatingLayout();
+  fitPodiumToViewport();
+}
+
 function applyRanking(parsedData) {
   const scaledData = getScales(parsedData);
   const states = resolveStates(parsedData);
@@ -159,6 +195,7 @@ function applyRanking(parsedData) {
   });
 
   sortCardsByRanking(parsedData);
+  updateLayoutBehavior();
 
   console.table(
     participantOrder.map((id) => ({
@@ -178,3 +215,5 @@ function refreshRanking() {
 refreshRanking();
 setInterval(refreshRanking, REFRESH_INTERVAL);
 window.addEventListener('focus', refreshRanking);
+window.addEventListener('resize', updateLayoutBehavior);
+window.addEventListener('load', updateLayoutBehavior);

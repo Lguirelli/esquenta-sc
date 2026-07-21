@@ -17,6 +17,7 @@
   --text-main: #ef5b2a;
   --white: #ffffff;
   --orange: #ef5b2a;
+  --viewport-scale: 1;
 }
 
 html,
@@ -60,7 +61,7 @@ video {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   pointer-events: none;
   z-index: 20;
 }
@@ -94,9 +95,9 @@ video {
   position: relative;
   z-index: 5;
   width: 100%;
-  height: 100%;
+  height: 86%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: clamp(84px, 14vh, 150px) clamp(16px, 3vw, 48px) clamp(86px, 13vh, 140px);
 }
@@ -105,9 +106,9 @@ video {
   width: var(--row-width);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: var(--row-gap);
+  gap: calc(var(--row-gap) * var(--viewport-scale));
 }
 
 .participant {
@@ -121,27 +122,27 @@ video {
 .participant-stage {
   position: relative;
   width: 100%;
-  min-height: calc(92px * var(--rank-scale));
+  min-height: calc(92px * var(--rank-scale) * var(--viewport-scale));
   border-radius: var(--pill-radius);
   background: var(--white);
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   border: 1px solid rgba(255,255,255,0.16);
   transition: min-height 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
 }
 
-.participant:nth-child(odd) .participant-stage {
+.participant[data-layout="photo-right"] .participant-stage {
   justify-content: flex-start;
-  padding-left: calc(34px * var(--rank-scale));
-  padding-right: calc(200px * var(--rank-scale));
+  padding-left: calc(34px * var(--rank-scale) * var(--viewport-scale));
+  padding-right: calc(160px * var(--rank-scale) * var(--viewport-scale));
 }
 
-.participant:nth-child(even) .participant-stage {
+.participant[data-layout="photo-left"] .participant-stage {
   justify-content: flex-end;
-  padding-right: calc(34px * var(--rank-scale));
-  padding-left: calc(200px * var(--rank-scale));
+  padding-right: calc(34px * var(--rank-scale) * var(--viewport-scale));
+  padding-left: calc(160px * var(--rank-scale) * var(--viewport-scale));
 }
 
 .participant-name {
@@ -149,7 +150,7 @@ video {
   z-index: 3;
   display: inline-block;
   color: var(--orange);
-  font-size: calc(var(--name-font-size) * var(--rank-scale));
+  font-size: calc(var(--name-font-size) * var(--rank-scale) * var(--viewport-scale));
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -161,47 +162,50 @@ video {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: min(210px, 30%);
+  width: calc(110px * var(--viewport-scale));
+  max-width: 15%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   overflow: hidden;
   z-index: 1;
+  padding: calc(4px * var(--viewport-scale)) 0;
 }
 
-.participant:nth-child(odd) .participant-photo-wrap {
+.participant[data-layout="photo-right"] .participant-photo-wrap {
   right: 0;
 }
 
-.participant:nth-child(even) .participant-photo-wrap {
+.participant[data-layout="photo-left"] .participant-photo-wrap {
   left: 0;
 }
 
 .participant-photo {
-  width: 100%;
-  height: 240%;
-  max-width: none;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
   object-fit: contain;
   object-position: center top;
-  transform-origin: top center;
+  align-self: flex-start;
+  transform-origin: center center;
   filter: saturate(1.02) contrast(1.01);
 }
 
 .participant[data-participant="michele"] .participant-photo {
-  height: 255%;
+  height: 86%;
 }
 
 .participant[data-participant="marcelly"] .participant-photo {
-  height: 255%;
+  height: 86%;
 }
 
 .participant[data-participant="pamela"] .participant-photo,
 .participant[data-participant="yasmin"] .participant-photo {
-  height: 248%;
+  height: 86%;
 }
 
 .participant[data-participant="alicia"] .participant-photo {
-  height: 250%;
+  height: 86%;
 }
 
 .participant[data-state="leader"] .participant-stage {
@@ -245,20 +249,27 @@ video {
   }
 
   .participant-stage {
-    min-height: calc(80px * var(--rank-scale));
+    min-height: calc(80px * var(--rank-scale) * var(--viewport-scale));
   }
 
   .participant-photo-wrap {
-    width: min(150px, 32%);
+    width: calc(88px * var(--viewport-scale));
+    max-width: 24%;
   }
 
-  .participant:nth-child(odd) .participant-stage {
-    padding-left: 22px;
-    padding-right: 118px;
+    .participant[data-layout="photo-right"] .participant-stage {
+    padding-left: calc(22px * var(--viewport-scale));
+    padding-right: calc(96px * var(--viewport-scale));
   }
 
-  .participant:nth-child(even) .participant-stage {
-    padding-right: 22px;
-    padding-left: 118px;
+  .participant[data-layout="photo-left"] .participant-stage {
+    padding-right: calc(22px * var(--viewport-scale));
+    padding-left: calc(96px * var(--viewport-scale));
   }
+}
+
+
+.participant-photo-wrap img {
+  margin-top: 0;
+  transform-origin: top center;
 }

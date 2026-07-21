@@ -250,3 +250,11 @@ Nesta versão:
 - o logo principal foi reduzido;
 - a ordem visual do podium agora é dinâmica, do maior valor para o menor valor;
 - em caso de empate, a ordenação secundária é alfabética.
+
+
+## Alternância dinâmica e escala responsiva
+
+Esta versão foi ajustada para:
+- alternar automaticamente o lado da foto e do nome conforme a posição atual de cada card no ranking;
+- reordenar o podium do maior valor para o menor valor;
+- aplicar uma escala responsiva dinâmica no conjunto do podium para evitar sobreposição em telas menores.
