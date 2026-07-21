@@ -274,3 +274,8 @@ A barra da líder fica com a maior largura, e as demais reduzem lateralmente de 
 ## Barras centralizadas
 
 Nesta versão, a escala lateral reduz ou amplia a largura das barras mantendo todas alinhadas ao centro do layout.
+
+
+## Logo do rodapé ampliada
+
+Nesta versão, a logo do rodapé foi ampliada em 2x, inclusive no comportamento responsivo.

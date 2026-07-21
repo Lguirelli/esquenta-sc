@@ -8,7 +8,7 @@
   --app-min-width: 320px;
   --app-min-height: 560px;
   --esquenta-sc-width: clamp(120px, 12vw, 250px);
-  --grupofarma-width: clamp(52px, 6vw, 120px);
+  --grupofarma-width: clamp(104px, 12vw, 240px);
   --row-width: min(780px, 92vw);
   --row-gap: clamp(10px, 1.5vh, 18px);
   --name-font-size: clamp(18px, 1.9vw, 29px);
@@ -234,7 +234,7 @@ video {
     --name-font-size: clamp(15px, 4.2vw, 22px);
     --stage-height: clamp(60px, 9vh, 78px);
     --esquenta-sc-width: clamp(120px, 34vw, 210px);
-    --grupofarma-width: clamp(48px, 15vw, 84px);
+    --grupofarma-width: clamp(96px, 30vw, 168px);
   }
 
   .participant[data-layout="photo-right"] .participant-stage {
