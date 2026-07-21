@@ -9,16 +9,14 @@
   --app-min-height: 560px;
   --esquenta-sc-width: clamp(180px, 18vw, 480px);
   --grupofarma-width: clamp(58px, 7vw, 150px);
-  --row-width: min(680px, 92vw);
-  --row-gap: clamp(14px, 1.8vh, 24px);
-  --name-font-size: clamp(24px, 2.2vw, 38px);
+  --row-width: min(760px, 92vw);
+  --row-gap: clamp(16px, 2vh, 24px);
+  --name-font-size: clamp(20px, 2vw, 30px);
   --pill-radius: 999px;
   --bg-screen: #000000;
-  --text-main: #ffffff;
-  --text-muted: rgba(255,255,255,0.88);
-  --accent: #ff5a1f;
-  --accent-soft: rgba(255, 90, 31, 0.18);
-  --danger-soft: rgba(255, 255, 255, 0.10);
+  --text-main: #ef5b2a;
+  --white: #ffffff;
+  --orange: #ef5b2a;
 }
 
 html,
@@ -100,7 +98,7 @@ video {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(90px, 15vh, 170px) clamp(16px, 3vw, 48px) clamp(80px, 12vh, 140px);
+  padding: clamp(104px, 17vh, 180px) clamp(16px, 3vw, 48px) clamp(86px, 13vh, 140px);
 }
 
 .podium {
@@ -116,66 +114,119 @@ video {
   --rank-scale: 1;
   --base-scale: 1;
   width: 100%;
-  max-width: 620px;
   display: flex;
   justify-content: center;
 }
 
 .participant-stage {
+  position: relative;
   width: 100%;
-  min-height: 70px;
+  min-height: calc(92px * var(--rank-scale));
+  border-radius: var(--pill-radius);
+  background: var(--white);
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: calc(10px * var(--rank-scale)) calc(22px * var(--rank-scale));
-  border-radius: var(--pill-radius);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.04);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-  transition: transform 0.55s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-  transform: scale(calc(var(--base-scale) * var(--rank-scale)));
-  transform-origin: center center;
+  transition: min-height 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
+}
+
+.participant:nth-child(odd) .participant-stage {
+  justify-content: flex-start;
+  padding-left: calc(34px * var(--rank-scale));
+  padding-right: calc(178px * var(--rank-scale));
+}
+
+.participant:nth-child(even) .participant-stage {
+  justify-content: flex-end;
+  padding-right: calc(34px * var(--rank-scale));
+  padding-left: calc(178px * var(--rank-scale));
 }
 
 .participant-name {
+  position: relative;
+  z-index: 3;
   display: inline-block;
-  color: var(--text-main);
+  color: var(--orange);
   font-size: calc(var(--name-font-size) * var(--rank-scale));
   font-weight: 800;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.participant-photo-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(220px, 34%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.participant:nth-child(odd) .participant-photo-wrap {
+  right: 0;
+}
+
+.participant:nth-child(even) .participant-photo-wrap {
+  left: 0;
+}
+
+.participant-photo {
+  width: 100%;
+  height: 128%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: saturate(1.02) contrast(1.01);
+}
+
+.participant[data-participant="michele"] .participant-photo {
+  height: 136%;
+}
+
+.participant[data-participant="marcelly"] .participant-photo {
+  height: 136%;
+}
+
+.participant[data-participant="pamela"] .participant-photo,
+.participant[data-participant="yasmin"] .participant-photo {
+  height: 132%;
 }
 
 .participant[data-state="leader"] .participant-stage {
-  background: linear-gradient(180deg, rgba(255,90,31,0.22), rgba(255,90,31,0.10));
-  border-color: rgba(255,90,31,0.7);
-  box-shadow: 0 0 0 1px rgba(255,90,31,0.18), 0 10px 28px rgba(255,90,31,0.12);
+  box-shadow: 0 0 0 2px rgba(239,91,42,0.50), 0 16px 34px rgba(239,91,42,0.22);
 }
 
 .participant[data-state="leader"] .participant-name {
-  color: #ffffff;
+  color: #e94a17;
 }
 
 .participant[data-state="last"] .participant-stage {
-  background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.12);
-  opacity: 0.86;
-}
-
-.participant[data-state="neutral"] .participant-stage {
-  background: rgba(255,255,255,0.04);
+  opacity: 0.92;
 }
 
 @media (max-width: 920px) {
   :root {
-    --row-width: min(560px, 92vw);
-    --name-font-size: clamp(22px, 3.2vw, 34px);
+    --row-width: min(620px, 92vw);
+    --name-font-size: clamp(18px, 3vw, 24px);
   }
 
   .ranking-area {
     padding-top: clamp(92px, 14vh, 130px);
     padding-bottom: clamp(72px, 11vh, 120px);
+  }
+
+  .participant:nth-child(odd) .participant-stage {
+    padding-right: 150px;
+  }
+
+  .participant:nth-child(even) .participant-stage {
+    padding-left: 150px;
   }
 }
 
@@ -184,32 +235,24 @@ video {
     --esquenta-sc-width: clamp(150px, 42vw, 240px);
     --grupofarma-width: clamp(52px, 17vw, 90px);
     --row-gap: 12px;
-    --name-font-size: clamp(20px, 5.2vw, 28px);
+    --name-font-size: clamp(16px, 4.5vw, 22px);
   }
 
   .participant-stage {
-    min-height: 58px;
+    min-height: calc(80px * var(--rank-scale));
   }
-}
 
+  .participant-photo-wrap {
+    width: min(165px, 38%);
+  }
 
-/* Layout em lista vertical */
-.podium {
-  gap: clamp(12px, 2vh, 22px);
-}
+  .participant:nth-child(odd) .participant-stage {
+    padding-left: 22px;
+    padding-right: 122px;
+  }
 
-.participant-stage {
-  justify-content: flex-start;
-  padding-left: clamp(24px, 4vw, 48px);
-}
-
-.participant-name {
-  text-align: left;
-  width: 100%;
-}
-
-@media (max-width: 560px) {
-  .participant-stage {
-    min-height: 56px;
+  .participant:nth-child(even) .participant-stage {
+    padding-right: 22px;
+    padding-left: 122px;
   }
 }

@@ -227,3 +227,17 @@ Participantes em ordem alfabética:
 - Michele
 - Pamela
 - Yasmin
+
+
+## Versão com boxes e fotos
+
+Esta versão usa boxes preenchidos em branco, nomes em laranja e fotos reais das participantes dentro dos boxes.
+
+Mapeamento das fotos usadas:
+- Alicia: `assets/fotos/alicia.png`
+- Marcelly: `assets/fotos/marcelly.png`
+- Michele: `assets/fotos/michele.png`
+- Pamela: `assets/fotos/pamela.png`
+- Yasmin: `assets/fotos/yasmin.png`
+
+O layout alterna a posição da foto entre direita e esquerda ao longo da lista.

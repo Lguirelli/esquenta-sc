@@ -1,8 +1,8 @@
 const REFRESH_INTERVAL = 5000;
 const SCALE_AVERAGE_SHARE = 0.20;
-const SCALE_SENSITIVITY = 1.10;
-const SCALE_MIN = 0.82;
-const SCALE_MAX = 1.24;
+const SCALE_SENSITIVITY = 1.08;
+const SCALE_MIN = 0.84;
+const SCALE_MAX = 1.22;
 
 const participantMap = {
   alicia: { label: 'Alicia', baseScale: 1 },
@@ -95,6 +95,7 @@ function buildSnapshot(data, states) {
 function updateCard(card, config, state, scale) {
   const name = card.querySelector('.participant-name');
   const stage = card.querySelector('.participant-stage');
+  const photo = card.querySelector('.participant-photo');
 
   card.dataset.state = state;
   card.style.setProperty('--rank-scale', String(scale || 1));
@@ -104,6 +105,10 @@ function updateCard(card, config, state, scale) {
 
   if (name) {
     name.textContent = config.label;
+  }
+
+  if (photo) {
+    photo.alt = `${config.label}`;
   }
 
   if (stage) {
